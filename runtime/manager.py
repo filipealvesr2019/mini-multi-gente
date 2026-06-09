@@ -1,10 +1,17 @@
-# runtime/manager.py
+from concurrent.futures import ThreadPoolExecutor
+import threading
+import time
+
 from .worker import Worker
 from .router import Router
 
+
 class Manager:
+
     def __init__(self):
+
         self.router = Router()
+
         self.workers = [
             Worker("texto"),
             Worker("codigo"),
@@ -13,25 +20,99 @@ class Manager:
         ]
 
     def divide_task(self, tarefa):
-        # Divide tarefa em partes específicas
+
         return [
-            {"categoria": "texto", "conteudo": f"Gerar interface e descrição: {tarefa}"},
-            {"categoria": "codigo", "conteudo": f"Gerar código base: {tarefa}"},
-            {"categoria": "matematica", "conteudo": f"Gerar cálculos: {tarefa}"},
-            {"categoria": "planejamento", "conteudo": f"Planejar etapas e componentes: {tarefa}"}
+            {
+                "categoria": "texto",
+                "conteudo": f"Gerar interface e descrição: {tarefa}"
+            },
+            {
+                "categoria": "codigo",
+                "conteudo": f"Gerar código base: {tarefa}"
+            },
+            {
+                "categoria": "matematica",
+                "conteudo": f"Gerar cálculos: {tarefa}"
+            },
+            {
+                "categoria": "planejamento",
+                "conteudo": f"Planejar etapas e componentes: {tarefa}"
+            }
         ]
 
-    def execute_subtasks(self, subtarefas):
-        resultados = []
-        for sub in subtarefas:
-            worker = self.router.choose_worker(self.workers, sub["categoria"])
-            resultado = worker.execute(sub["conteudo"])
-            resultados.append(resultado)
-            # Mostrar status para feedback humano
-            self.report_status()
-        return resultados
+    def dashboard_loop(self):
 
-    def report_status(self):
-        print("\nStatus dos Workers:")
-        for w in self.workers:
-            print(f"{w.especialidade}: {w.status} - {w.current_task}")
+        while True:
+
+            print("\n" * 2)
+            print("=" * 50)
+            print("CEO DASHBOARD")
+            print("=" * 50)
+
+            concluidos = 0
+
+            for worker in self.workers:
+
+                print(
+                    f"{worker.especialidade:<15}"
+                    f"{worker.status:<15}"
+                    f"{worker.progress}%"
+                )
+
+                if worker.status == "concluído":
+                    concluidos += 1
+
+            if concluidos == len(self.workers):
+                break
+
+            time.sleep(1)
+
+    def execute_subtasks(self, subtarefas):
+
+        resultados = []
+
+        dashboard = threading.Thread(
+            target=self.dashboard_loop
+        )
+
+        dashboard.start()
+
+        def executar(sub):
+
+            worker = self.router.choose_worker(
+                self.workers,
+                sub["categoria"]
+            )
+
+            print(
+                f"\n[{worker.especialidade.upper()}] INICIOU"
+            )
+
+            resultado = worker.execute(
+                sub["conteudo"]
+            )
+
+            print(
+                f"[{worker.especialidade.upper()}] TERMINOU"
+            )
+
+            return resultado
+
+        with ThreadPoolExecutor(max_workers=4) as executor:
+
+            futures = [
+                executor.submit(
+                    executar,
+                    sub
+                )
+                for sub in subtarefas
+            ]
+
+            for future in futures:
+                resultados.append(
+                    future.result()
+                )
+
+        dashboard.join()
+
+        return resultados
