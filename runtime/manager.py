@@ -3,16 +3,18 @@ import threading
 import time
 from .worker import Worker
 from .router import Router
+from .command_bus import CommandBus
 
 
 class Manager:
     def __init__(self):
+        self.bus = CommandBus()
         self.router = Router()
         self.workers = [
-            Worker("Ana", "texto"),
-            Worker("João", "codigo"),
-            Worker("Pedro", "matematica"),
-            Worker("Marina", "planejamento")
+            Worker("Ana", "texto", self.bus),
+            Worker("João", "codigo", self.bus),
+            Worker("Pedro", "matematica", self.bus),
+            Worker("Marina", "planejamento", self.bus)
         ]
 
     def divide_task(self, tarefa):
@@ -60,7 +62,7 @@ class Manager:
             worker.dependency_done = all(
                 name_map[d].status == "concluído" for d in dep_map[sub["categoria"]]
             )
-            res = worker.execute(sub["conteudo"])
+            res = worker.run_task(sub["conteudo"])
             for k, deps in dep_map.items():
                 if sub["categoria"] in deps:
                     name_map[k].dependency_done = True
@@ -96,10 +98,10 @@ class Manager:
                 if w.nome.lower() == tokens[1].lower():
                     w.paused = False
                     print(f"{w.nome} reiniciado")
-        elif tokens[0].lower() == "prioridade" and len(tokens) == 2:
-            # para V6, só printa
-            for w in self.workers:
-                if w.nome.lower() == tokens[1].lower():
-                    print(f"{w.nome} agora tem prioridade!")
+        elif tokens[0].lower() == "msg" and len(tokens) >= 3:
+            target = tokens[1]
+            message = " ".join(tokens[2:])
+            self.bus.send(target, message)
+            print(f"Mensagem enviada para {target}")
         else:
             print("Comando desconhecido")
