@@ -1,49 +1,45 @@
-import os
+# runtime/workspace_manager.py
+from runtime.sandbox import Sandbox
+from pathlib import Path
 
 class WorkspaceManager:
-    base_dir = "workspace"
 
-    @staticmethod
-    def save_project_file(project_name, relative_path, content):
-        """
-        Salva o arquivo no projeto final.
-        Exemplo: workspace/projects/IDE_Multi_Agente/frontend/App.jsx
-        """
-        project_file = os.path.join(
-            WorkspaceManager.base_dir,
-            "projects",
-            project_name,
-            relative_path
-        )
-        os.makedirs(os.path.dirname(project_file), exist_ok=True)
-        with open(project_file, "w", encoding="utf-8") as f:
+    @classmethod
+    def create_file(cls, path, content=""):
+        full_path = Sandbox.path(path)
+        full_path.parent.mkdir(parents=True, exist_ok=True)
+        full_path.write_text(content, encoding="utf-8")
+        return full_path
+
+    @classmethod
+    def read_file(cls, path):
+        full_path = Sandbox.path(path)
+        if not full_path.exists():
+            return None
+        return full_path.read_text(encoding="utf-8")
+
+    @classmethod
+    def update_file(cls, path, content):
+        full_path = Sandbox.path(path)
+        if not full_path.exists():
+            raise FileNotFoundError(full_path)
+        full_path.write_text(content, encoding="utf-8")
+
+    @classmethod
+    def append_file(cls, path, content):
+        full_path = Sandbox.path(path)
+        if not full_path.exists():
+            raise FileNotFoundError(full_path)
+        with open(full_path, "a", encoding="utf-8") as f:
             f.write(content)
-        return project_file
 
-    @staticmethod
-    def save_worker_log(worker_name, subtask_name, content):
-        """
-        Salva o arquivo no log de cada worker.
-        Exemplo: workspace/logs/João/Criar_App.jsx.txt
-        """
-        log_file = os.path.join(
-            WorkspaceManager.base_dir,
-            "logs",
-            worker_name,
-            f"{subtask_name.replace(' ', '_')}.txt"
-        )
-        os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        with open(log_file, "w", encoding="utf-8") as f:
-            f.write(content)
-        return log_file
+    @classmethod
+    def delete_file(cls, path):
+        full_path = Sandbox.path(path)
+        if full_path.exists():
+            full_path.unlink()
 
-    @staticmethod
-    def list_workspace():
-        """
-        Lista todos os arquivos em workspace
-        """
-        all_files = []
-        for root, dirs, files in os.walk(WorkspaceManager.base_dir):
-            for file in files:
-                all_files.append(os.path.join(root, file))
-        return all_files
+    @classmethod
+    def list_files(cls):
+        return [str(f.relative_to(Sandbox.ROOT)) 
+                for f in Sandbox.ROOT.rglob("*") if f.is_file()]

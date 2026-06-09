@@ -1,43 +1,24 @@
 import time
 import random
-from runtime.workspace_manager import WorkspaceManager
+from runtime.sandbox import Sandbox
 
 class WorkerExecutor:
 
     @staticmethod
-    def execute(worker, subtask, project_name="IDE_Multi_Agente"):
-
+    def execute(worker, subtask):
         start_time = time.time()
-        print(f"\n[{worker.name}] recebeu: {subtask}")
+        print()
+        print(f"[{worker.name}] recebeu: {subtask}")
 
-        # Simulação de progresso
+        # Simula progresso
         for p in [20, 40, 60, 80, 100]:
             time.sleep(random.uniform(0.3, 1.0))
             print(f"[{worker.name}] {subtask} {p}%")
 
-        # Conteúdo simulado do arquivo
-        content = f"{worker.name} executou: {subtask}"
+        # Salva na sandbox
+        filename = subtask.replace(" ", "_") + ".txt"
+        Sandbox.create_file(f"{worker.name}/{filename}", f"{subtask} realizado por {worker.name}")
 
-        # Salva no projeto final
-        project_path = subtask_to_path(subtask)
-        WorkspaceManager.save_project_file(project_name, project_path, content)
-
-        # Salva no log do worker
-        WorkspaceManager.save_worker_log(worker.name, subtask, content)
-
-        elapsed = time.time() - start_time
-        print(f"[{worker.name}] ENTREGOU {subtask} em {elapsed:.2f}s -> {project_path}")
-
-
-def subtask_to_path(subtask):
-    """
-    Define onde cada subtask deve ir dentro do projeto final
-    """
-    if subtask == "Criar App.jsx":
-        return "frontend/App.jsx"
-    elif subtask == "Criar style.css":
-        return "frontend/style.css"
-    elif subtask == "Criar prompts":
-        return "prompts/system_prompt.md"
-    else:
-        return f"misc/{subtask.replace(' ', '_')}.txt"
+        end_time = time.time()
+        elapsed = end_time - start_time
+        print(f"[{worker.name}] ENTREGOU {subtask} em {elapsed:.2f}s -> {Sandbox.BASE_DIR}\\{worker.name}\\{filename}")

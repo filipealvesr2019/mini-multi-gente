@@ -1,14 +1,17 @@
 from runtime.company import Company
+from runtime.sandbox import Sandbox
 
 def main():
-    # Inicializa a empresa com departamentos, managers e workers
-    empresa = Company()
+    # Limpa e inicializa sandbox
+    Sandbox.clear()
+    Sandbox.init()
 
-    # Mostra a estrutura da empresa
+    empresa = Company()
     empresa.show_structure()
 
-    # Cria tarefas
-    tarefas = ["Projeto IDE Multi-Agente"]
+    tarefas = [
+        "Projeto IDE Multi-Agente"
+    ]
 
     for tarefa in tarefas:
         print(f"\n🚀 Nova tarefa: {tarefa}")
