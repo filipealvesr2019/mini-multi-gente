@@ -1,25 +1,41 @@
+# runtime/worker.py
 import time
-import random
-import threading
+from runtime.sandbox import Sandbox
 
 class Worker:
-    def __init__(self, name, skills):
+    def __init__(self, name, skills=None):
         self.name = name
-        self.skills = skills
-        self.status = "aguardando"
-        self.current_task = None
-        self.progress = 0
-        self.lock = threading.Lock()
+        self.skills = skills or []
 
-    def run_task(self, skill, task):
-        self.status = "executando"
-        self.current_task = task
-        self.progress = 0
-        for i in range(10):
-            time.sleep(random.uniform(0.1, 0.3))
-            with self.lock:
-                self.progress = (i+1)*10
-        self.status = "concluído"
-        self.progress = 100
-        self.current_task = None
-        return f"[{self.name}] Executou ({skill}): {task}"
+    def run_task(self, skill, task_description):
+        """
+        Executa a tarefa: chama a LLM para gerar conteúdo,
+        escreve no sandbox e retorna caminho do arquivo.
+        """
+        print(f"[{self.name}] recebeu: {task_description}")
+
+        # 1. Geração de conteúdo via LLM
+        content = self.generate_content(skill, task_description)
+
+        # 2. Criação do arquivo na sandbox
+        file_path = Sandbox.create_file(self.name, task_description, content)
+
+        # 3. Calcula diff (simula linhas adicionadas/removidas)
+        diff_plus, diff_minus = Sandbox.diff_file(file_path)
+
+        print(f"[{self.name}] CRIADO {file_path}")
+        print(f"[{self.name}] DIFF +{diff_plus} -{diff_minus}")
+
+        # 4. Retorna resultado
+        return f"[{self.name}] ENTREGOU {task_description} -> {file_path}"
+
+    def generate_content(self, skill, task_description):
+        """
+        Aqui é onde você chamaria a LLM de verdade.
+        Por enquanto, exemplo de placeholder:
+        """
+        # Simula delay de processamento
+        time.sleep(0.5)
+
+        # Retorna texto baseado na skill
+        return f"# {skill.upper()} - {task_description}\n\nConteúdo gerado dinamicamente.\n"

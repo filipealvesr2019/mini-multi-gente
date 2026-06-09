@@ -1,0 +1,3 @@
+# CODIGO - Criar código React: Projeto IDE Multi-Agente
+
+Conteúdo gerado dinamicamente.
