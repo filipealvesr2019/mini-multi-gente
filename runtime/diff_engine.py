@@ -1,25 +1,11 @@
-import difflib
+# diff_engine.py
+import os  # ESSENCIAL
 
-class DiffEngine:
-
-    @staticmethod
-    def compare(old_text, new_text):
-
-        diff = difflib.unified_diff(
-            old_text.splitlines(),
-            new_text.splitlines(),
-            lineterm=""
-        )
-
-        return "\n".join(diff)
-
-    @staticmethod
-    def stats(old_text, new_text):
-
-        old_lines = old_text.splitlines()
-        new_lines = new_text.splitlines()
-
-        added = max(0, len(new_lines) - len(old_lines))
-        removed = max(0, len(old_lines) - len(new_lines))
-
-        return added, removed
+def generate_diff(file_path):
+    if not os.path.exists(file_path):
+        return {"added": 0, "removed": 0}
+    with open(file_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    added = len(lines)
+    removed = 0  # futuramente você pode comparar versões anteriores
+    return {"added": added, "removed": removed}

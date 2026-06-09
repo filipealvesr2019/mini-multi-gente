@@ -1,41 +1,29 @@
-# runtime/worker.py
-import time
 from runtime.sandbox import Sandbox
+from runtime.diff_engine import generate_diff
+import time
+import random
 
 class Worker:
-    def __init__(self, name, skills=None):
+
+    def __init__(self, name, persona, skills):
         self.name = name
-        self.skills = skills or []
+        self.persona = persona
+        self.skills = skills
 
-    def run_task(self, skill, task_description):
-        """
-        Executa a tarefa: chama a LLM para gerar conteúdo,
-        escreve no sandbox e retorna caminho do arquivo.
-        """
-        print(f"[{self.name}] recebeu: {task_description}")
+    def run_task(self, skill, task_title, content):
+        print(f"[{self.name}] recebeu: {task_title}")
 
-        # 1. Geração de conteúdo via LLM
-        content = self.generate_content(skill, task_description)
+        # simula execução em etapas
+        for p in [20, 40, 60, 80, 100]:
+            time.sleep(random.uniform(0.2, 0.6))
+            print(f"[{self.name}] {task_title} {p}%")
 
-        # 2. Criação do arquivo na sandbox
-        file_path = Sandbox.create_file(self.name, task_description, content)
+        filename = task_title.replace(" ", "_") + ".txt"
+        path = Sandbox.save_file(self.name, filename, content)
 
-        # 3. Calcula diff (simula linhas adicionadas/removidas)
-        diff_plus, diff_minus = Sandbox.diff_file(file_path)
+        # diff simples
+        diff = generate_diff(path)
+        print(f"[{self.name}] DIFF +{diff['added']} -{diff['removed']}")
+        print(f"[{self.name}] ENTREGUE {task_title} em {round(random.uniform(1,3),2)}s")
 
-        print(f"[{self.name}] CRIADO {file_path}")
-        print(f"[{self.name}] DIFF +{diff_plus} -{diff_minus}")
-
-        # 4. Retorna resultado
-        return f"[{self.name}] ENTREGOU {task_description} -> {file_path}"
-
-    def generate_content(self, skill, task_description):
-        """
-        Aqui é onde você chamaria a LLM de verdade.
-        Por enquanto, exemplo de placeholder:
-        """
-        # Simula delay de processamento
-        time.sleep(0.5)
-
-        # Retorna texto baseado na skill
-        return f"# {skill.upper()} - {task_description}\n\nConteúdo gerado dinamicamente.\n"
+        return {"worker": self.name, "file": path, "task": task_title, "diff": diff}
