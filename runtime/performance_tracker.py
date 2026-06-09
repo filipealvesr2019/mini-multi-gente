@@ -1,31 +1,39 @@
 # runtime/performance_tracker.py
 
+import threading
+import time
+
 class PerformanceTracker:
     def __init__(self):
-        # dados por worker
-        # { "João": {"tasks": 0, "total_time": 0.0} }
+        # dados por worker e skill
         self.data = {}
+        self.lock = threading.Lock()
 
-    def record(self, worker_name, duration):
-        if worker_name not in self.data:
-            self.data[worker_name] = {"tasks": 0, "total_time": 0.0}
-        self.data[worker_name]["tasks"] += 1
-        self.data[worker_name]["total_time"] += duration
+    def log_task(self, worker_name, skill, duration):
+        with self.lock:
+            if worker_name not in self.data:
+                self.data[worker_name] = {}
+            if skill not in self.data[worker_name]:
+                self.data[worker_name][skill] = {"tasks": 0, "total_time": 0.0}
+            self.data[worker_name][skill]["tasks"] += 1
+            self.data[worker_name][skill]["total_time"] += duration
 
-    def average_time(self, worker_name):
-        worker = self.data.get(worker_name)
-        if worker and worker["tasks"] > 0:
-            return worker["total_time"] / worker["tasks"]
-        return 1.0  # default 1s para quem ainda não executou
+    def average_time(self, worker_name, skill):
+        with self.lock:
+            if worker_name in self.data and skill in self.data[worker_name]:
+                info = self.data[worker_name][skill]
+                return info["total_time"] / info["tasks"]
+        return float('inf')
 
     def report(self):
-        return {
-            worker: {
-                "tasks": stats["tasks"],
-                "average_time": stats["total_time"] / stats["tasks"]
-            }
-            for worker, stats in self.data.items()
-        }
+        with self.lock:
+            report = {}
+            for worker, skills in self.data.items():
+                report[worker] = {}
+                for skill, info in skills.items():
+                    avg = info["total_time"] / info["tasks"]
+                    report[worker][skill] = {"tasks": info["tasks"], "average_time": avg}
+            return report
 
-# tracker global
+# Tracker global
 tracker = PerformanceTracker()

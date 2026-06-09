@@ -1,5 +1,7 @@
 # runtime/run_company.py
+
 from runtime.manager import Manager
+from runtime.performance_tracker import tracker
 
 if __name__ == "__main__":
     manager = Manager()
@@ -15,8 +17,7 @@ if __name__ == "__main__":
     for r in resultados:
         print(r)
 
-    # mostrar relatório de performance
-    from runtime.performance_tracker import tracker
     print("\n📊 RELATÓRIO DE PERFORMANCE:")
-    for worker, stats in tracker.report().items():
-        print(f"{worker}: {stats['tasks']} tarefas, média {stats['average_time']:.2f}s")
+    for worker, skills in tracker.report().items():
+        for skill, stats in skills.items():
+            print(f"{worker} ({skill}): {stats['tasks']} tarefas, média {stats['average_time']:.2f}s")

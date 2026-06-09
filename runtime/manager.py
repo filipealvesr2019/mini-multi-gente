@@ -1,29 +1,35 @@
+# runtime/manager.py
+
 from concurrent.futures import ThreadPoolExecutor
 import threading
 import time
-from runtime.worker import Worker, tracker
-from runtime.router import Router
-from runtime.command_bus import CommandBus
-
+from .worker import Worker
 
 class Manager:
     def __init__(self):
-        self.bus = CommandBus()
-        self.router = Router()
         self.workers = [
-            Worker("Ana", "texto", self.bus),
-            Worker("João", "codigo", self.bus),
-            Worker("Pedro", "matematica", self.bus),
-            Worker("Marina", "planejamento", self.bus)
+            Worker("Ana", skills=["texto"], forbidden=["matematica"]),
+            Worker("João", skills=["codigo"], forbidden=["texto"]),
+            Worker("Pedro", skills=["matematica"]),
+            Worker("Marina", skills=["planejamento"])
         ]
 
-    def divide_task(self, tarefa):
+    def divide_task(self, task_name):
         return [
-            {"categoria": "planejamento", "conteudo": f"Planejar projeto: {tarefa}"},
-            {"categoria": "codigo", "conteudo": f"Criar código React: {tarefa}"},
-            {"categoria": "texto", "conteudo": f"Documentar interface: {tarefa}"},
-            {"categoria": "matematica", "conteudo": f"Implementar cálculos: {tarefa}"}
+            {"skill": "planejamento", "task": f"Planejar projeto: {task_name}"},
+            {"skill": "codigo", "task": f"Criar código React: {task_name}"},
+            {"skill": "texto", "task": f"Documentar interface: {task_name}"},
+            {"skill": "matematica", "task": f"Implementar cálculos: {task_name}"}
         ]
+
+    def choose_worker(self, skill):
+        # filtra por skill e não forbidden
+        candidates = [w for w in self.workers if skill in w.skills and skill not in w.forbidden]
+        if not candidates:
+            return None
+        # escolhe o worker mais rápido naquela skill
+        from .performance_tracker import tracker
+        return min(candidates, key=lambda w: tracker.average_time(w.name, skill))
 
     def dashboard_loop(self):
         while True:
@@ -33,7 +39,7 @@ class Manager:
             print("=" * 60)
             concluidos = 0
             for w in self.workers:
-                print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}% | avg {tracker.average_time(w.nome):.2f}s")
+                print(f"{w.name:<12}{','.join(w.skills):<20}{w.status:<20}{w.progress}%")
                 if w.status == "concluído":
                     concluidos += 1
             if concluidos == len(self.workers):
@@ -41,6 +47,7 @@ class Manager:
             time.sleep(1)
 
     def execute_subtasks(self, subtasks):
+        # dependências simples
         dep_map = {
             "planejamento": [],
             "codigo": ["planejamento"],
@@ -48,7 +55,7 @@ class Manager:
             "matematica": ["texto"]
         }
 
-        name_map = {w.especialidade: w for w in self.workers}
+        name_map = {w.skills[0]: w for w in self.workers}  # simplificado
 
         for key, deps in dep_map.items():
             for dep in deps:
@@ -59,20 +66,15 @@ class Manager:
         dashboard.start()
 
         def executar(sub):
-            # escolhe worker com melhor performance
-            candidates = [w for w in self.workers if w.especialidade == sub["categoria"]]
-            if not candidates:
-                worker = self.workers[0]
-            else:
-                worker = min(candidates, key=lambda w: tracker.average_time(w.nome))
-
+            worker = self.choose_worker(sub["skill"])
+            if not worker:
+                return f"Nenhum worker disponível para skill {sub['skill']}"
             worker.dependency_done = all(
-                name_map[d].status == "concluído" for d in dep_map[sub["categoria"]]
+                name_map[d].status == "concluído" for d in dep_map[sub["skill"]]
             )
-            res = worker.run_task(sub["conteudo"])
-
+            res = worker.run_task(sub["skill"], sub["task"])
             for k, deps in dep_map.items():
-                if sub["categoria"] in deps:
+                if sub["skill"] in deps:
                     name_map[k].dependency_done = True
             return res
 
@@ -84,32 +86,3 @@ class Manager:
 
         dashboard.join()
         return resultados
-
-    # comandos humanos
-    def command(self, cmd):
-        tokens = cmd.strip().split()
-        if not tokens:
-            return
-        if tokens[0].lower() == "status":
-            for w in self.workers:
-                print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}% | avg {tracker.average_time(w.nome):.2f}s")
-        elif tokens[0].lower() == "tarefas":
-            for w in self.workers:
-                print(f"{w.nome:<12}{w.current_task}")
-        elif tokens[0].lower() == "parar" and len(tokens) == 2:
-            for w in self.workers:
-                if w.nome.lower() == tokens[1].lower():
-                    w.paused = True
-                    print(f"{w.nome} pausado")
-        elif tokens[0].lower() == "reiniciar" and len(tokens) == 2:
-            for w in self.workers:
-                if w.nome.lower() == tokens[1].lower():
-                    w.paused = False
-                    print(f"{w.nome} reiniciado")
-        elif tokens[0].lower() == "msg" and len(tokens) >= 3:
-            target = tokens[1]
-            message = " ".join(tokens[2:])
-            self.bus.send(target, message)
-            print(f"Mensagem enviada para {target}")
-        else:
-            print("Comando desconhecido")
