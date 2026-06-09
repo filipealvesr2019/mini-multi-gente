@@ -8,10 +8,11 @@
 /* ===================== Estilo geral ===================== */
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:#1e1e1e; color:#cccccc; height:100vh; overflow:hidden; }
-.container { display:flex; height:calc(100vh - 60px); }
+.main-container { display:flex; height: 100vh; flex-direction: column; }
+.content-area { display:flex; flex: 1; overflow: hidden; }
 
 /* ===================== Sidebar (Estilo VS Code) ===================== */
-.sidebar { width:260px; background:#252526; border-right:1px solid #333; display: flex; flex-direction: column; }
+.sidebar { width:240px; background:#252526; border-right:1px solid #333; display: flex; flex-direction: column; }
 .sidebar-header { padding: 10px 15px; font-size: 11px; color: #999; text-transform: uppercase; font-weight: bold; border-bottom: 1px solid #333; }
 .explorer { flex: 1; overflow-y: auto; padding-top: 5px; }
 
@@ -19,112 +20,111 @@ body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:
 .tree-item { cursor: pointer; display: flex; align-items: center; padding: 4px 10px; font-size: 13px; white-space: nowrap; user-select: none; }
 .tree-item:hover { background: #2a2d2e; }
 .tree-item.selected { background: #37373d; color: #fff; }
-.tree-item .icon { margin-right: 6px; width: 16px; text-align: center; }
+.tree-item .icon { margin-right: 6px; width: 16px; text-align: center; font-size: 10px; color: #888; }
 .folder-content { display: none; margin-left: 12px; border-left: 1px solid #333; }
 .folder-content.open { display: block; }
 
-/* ===================== Editor ===================== */
-.editor { flex:1; background:#1e1e1e; display: flex; flex-direction: column; position: relative; }
+/* ===================== Editor Central ===================== */
+.editor-container { flex: 1; background:#1e1e1e; display: flex; flex-direction: column; position: relative; border-right: 1px solid #333; }
 .editor-placeholder { display: flex; align-items: center; justify-content: center; height: 100%; color: #555; font-size: 14px; }
-.editor textarea { flex: 1; width:100%; background:transparent; border:none; outline:none; color:#d4d4d4; resize:none; font-size:14px; font-family: 'Consolas', 'Courier New', monospace; padding: 20px; line-height: 1.5; }
-.editor-image-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; background: #252526; overflow: auto; }
-.editor-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+.editor-textarea { flex: 1; width:100%; background:transparent; border:none; outline:none; color:#d4d4d4; resize:none; font-size:14px; font-family: 'Consolas', 'Courier New', monospace; padding: 20px; line-height: 1.5; }
+.editor-image-view { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; background: #252526; overflow: auto; }
+.editor-image-view img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
 
-/* ===================== Prompt Bar ===================== */
-.prompt-bar { position:fixed; bottom:0; left:0; right:0; height:60px; background:#252526; border-top:1px solid #333; display:flex; align-items:center; gap:10px; padding:10px; z-index: 2000; }
-.plus-wrapper { position:relative; }
-.plus-btn { width:40px; height:40px; border:none; background:#333; color:white; font-size:22px; border-radius:6px; cursor:pointer; transition: background 0.2s; }
-.plus-btn:hover { background:#444; }
-.prompt { flex:1; height:40px; border:none; outline:none; background:#1e1e1e; color:white; padding:0 12px; border-radius:6px; border: 1px solid #3c3c3c; }
-.prompt:focus { border-color: #0078d4; }
-.send-btn { height:40px; padding:0 20px; border:none; background:#0078d4; color:white; border-radius:6px; cursor:pointer; font-weight: 500; }
-.send-btn:hover { background:#0e86ea; }
+/* ===================== Chat Panel (Direita) ===================== */
+.chat-panel { width: 350px; background: #252526; display: flex; flex-direction: column; border-left: 1px solid #333; }
+.chat-header { padding: 10px 15px; font-size: 11px; color: #999; text-transform: uppercase; font-weight: bold; border-bottom: 1px solid #333; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; }
+.message { background: #2d2d2d; padding: 12px; border-radius: 8px; border: 1px solid #3c3c3c; position: relative; }
+.message-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 10px; color: #888; }
+.message-content { font-size: 13px; line-height: 1.4; color: #ddd; white-space: pre-wrap; }
+.copy-btn { background: #3c3c3c; border: none; color: #ccc; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 10px; }
+.copy-btn:hover { background: #4c4c4c; color: #fff; }
+
+/* ===================== Prompt Area ===================== */
+.prompt-area { background:#252526; border-top:1px solid #333; padding: 15px; width: 100%; }
+.prompt-container { max-width: 1200px; margin: 0 auto; display: flex; gap: 12px; align-items: center; }
+.plus-wrapper { position:relative; flex-shrink: 0; }
+.plus-btn { width:44px; height:44px; border:none; background:#333; color:white; font-size:24px; border-radius:8px; cursor:pointer; display: flex; align-items: center; justify-content: center; }
+.prompt-input-wrapper { flex: 1; }
+.prompt-input { width: 100%; height: 60px; background: #1e1e1e; color: white; padding: 12px; border-radius: 8px; border: 1px solid #3c3c3c; outline: none; resize: none; font-family: inherit; font-size: 14px; }
+.send-btn { height:44px; padding:0 24px; border:none; background:#0078d4; color:white; border-radius:8px; cursor:pointer; font-weight: 600; font-size: 14px; flex-shrink: 0; }
 
 /* ===================== Menu do + ===================== */
-.add-menu { 
-    position: fixed; 
-    background: #252526; 
-    border: 1px solid #454545; 
-    border-radius: 8px; 
-    width: 200px; 
-    display: none; 
-    flex-direction: column; 
-    overflow: hidden; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.6); 
-    z-index: 3000; 
-}
-.menu-title { padding: 10px 15px; background: #2d2d2d; border-bottom: 1px solid #3c3c3c; font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; }
-.menu-option { 
-    width: 100%; 
-    border: none; 
-    background: none; 
-    color: #ccc; 
-    text-align: left; 
-    padding: 12px 15px; 
-    cursor: pointer; 
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: background 0.2s, color 0.2s;
-}
+.add-menu { position: fixed; background: #252526; border: 1px solid #454545; border-radius: 8px; width: 200px; display: none; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.6); z-index: 3000; }
+.menu-title { padding: 10px 15px; background: #2d2d2d; border-bottom: 1px solid #3c3c3c; font-size: 11px; color: #aaa; text-transform: uppercase; }
+.menu-option { width: 100%; border: none; background: none; color: #ccc; text-align: left; padding: 12px 15px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 10px; }
 .menu-option:hover { background: #37373d; color: white; }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Sidebar / Explorer -->
-    <div class="sidebar">
-        <div class="sidebar-header">Explorer</div>
-        <div class="explorer" id="explorer">
-            <!-- Árvore de arquivos será injetada aqui -->
+<div class="main-container">
+    <div class="content-area">
+        <div class="sidebar">
+            <div class="sidebar-header">Explorer</div>
+            <div class="explorer" id="explorer"></div>
+        </div>
+        <div class="editor-container" id="editor-view">
+            <div class="editor-placeholder">Selecione um arquivo para visualizar</div>
+        </div>
+        <div class="chat-panel">
+            <div class="chat-header">Resultados do Prompt</div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message">
+                    <div class="message-header"><span>AI Assistant</span><button class="copy-btn" onclick="copyText(this)">Copiar</button></div>
+                    <div class="message-content">Olá! Eu sou seu assistente.</div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Editor -->
-    <div class="editor" id="editor-view">
-        <div class="editor-placeholder">Selecione um arquivo para visualizar</div>
+    <div class="prompt-area">
+        <div class="prompt-container">
+            <div class="plus-wrapper">
+                <button class="plus-btn" id="plusBtn">+</button>
+                <div class="add-menu" id="addMenu">
+                    <div class="menu-title">Adicionar ao Contexto</div>
+                    <button class="menu-option" onclick="document.getElementById('fileInput').click()">📄 Arquivos</button>
+                    <button class="menu-option" onclick="document.getElementById('folderInput').click()">📂 Pasta</button>
+                    <button class="menu-option" onclick="document.getElementById('imageInput').click()">🖼 Imagem</button>
+                </div>
+            </div>
+            <div class="prompt-input-wrapper"><textarea class="prompt-input" id="promptInput" placeholder="Digite seu comando..."></textarea></div>
+            <button class="send-btn" id="sendBtn">Enviar</button>
+        </div>
     </div>
 </div>
 
-<!-- Prompt Bar -->
-<div class="prompt-bar">
-    <div class="plus-wrapper">
-        <button class="plus-btn" id="plusBtn">+</button>
-        <div class="add-menu" id="addMenu">
-            <div class="menu-title">Adicionar ao Contexto</div>
-            <button class="menu-option" onclick="document.getElementById('fileInput').click()"><span>📄</span> Arquivos</button>
-            <button class="menu-option" onclick="document.getElementById('folderInput').click()"><span>📂</span> Pasta</button>
-            <button class="menu-option" onclick="document.getElementById('imageInput').click()"><span>🖼</span> Imagem</button>
-        </div>
-    </div>
-    <input class="prompt" placeholder="Digite comando ou prompt para agentes..." />
-    <button class="send-btn">Enviar</button>
-</div>
-
-<!-- Inputs invisíveis -->
 <input type="file" id="fileInput" multiple hidden />
 <input type="file" id="folderInput" webkitdirectory directory multiple hidden />
 <input type="file" id="imageInput" accept="image/*" multiple hidden />
 
 <script>
 // =================== Estado Global ===================
-let fileSystem = { name: "root", type: "folder", children: {} };
+let fileSystemRoot = { name: "root", type: "folder", children: {} };
 const explorerEl = document.getElementById("explorer");
 const editorView = document.getElementById("editor-view");
+const chatMessages = document.getElementById("chatMessages");
+const promptInput = document.getElementById("promptInput");
+const sendBtn = document.getElementById("sendBtn");
 const plusBtn = document.getElementById("plusBtn");
 const addMenu = document.getElementById("addMenu");
 
-// =================== Utilitários de Árvore ===================
+// =================== Lógica de Limpeza e Árvore Robustecida ===================
+function clearWorkspace() {
+    fileSystemRoot = { name: "root", type: "folder", children: {} };
+    editorView.innerHTML = '<div class="editor-placeholder">Selecione um arquivo para visualizar</div>';
+    explorerEl.innerHTML = "";
+}
+
 function addToTree(path, content, type) {
     const parts = path.split('/').filter(p => p);
-    let current = fileSystem;
-
+    let current = fileSystemRoot;
+    
     for (let i = 0; i < parts.length; i++) {
         const part = parts[i];
         const isLast = i === parts.length - 1;
-
+        
         if (isLast) {
             current.children[part] = { name: part, type, content };
         } else {
@@ -134,20 +134,12 @@ function addToTree(path, content, type) {
             current = current.children[part];
         }
     }
-    renderExplorer();
 }
 
 function renderExplorer() {
     explorerEl.innerHTML = "";
-    const rootItems = Object.values(fileSystem.children);
-    rootItems.sort((a, b) => {
-        if (a.type === b.type) return a.name.localeCompare(b.name);
-        return a.type === "folder" ? -1 : 1;
-    });
-    
-    rootItems.forEach(item => {
-        explorerEl.appendChild(createTreeElement(item));
-    });
+    const items = Object.values(fileSystemRoot.children).sort((a, b) => (a.type === b.type ? a.name.localeCompare(b.name) : a.type === "folder" ? -1 : 1));
+    items.forEach(item => explorerEl.appendChild(createTreeElement(item)));
 }
 
 function createTreeElement(item) {
@@ -170,15 +162,11 @@ function createTreeElement(item) {
         const content = document.createElement("div");
         content.className = "folder-content";
         
-        const children = Object.values(item.children);
-        children.sort((a, b) => {
-            if (a.type === b.type) return a.name.localeCompare(b.name);
-            return a.type === "folder" ? -1 : 1;
-        });
-
+        const children = Object.values(item.children).sort((a, b) => (a.type === b.type ? a.name.localeCompare(b.name) : a.type === "folder" ? -1 : 1));
         children.forEach(child => content.appendChild(createTreeElement(child)));
+        
         container.appendChild(content);
-
+        
         el.onclick = (e) => {
             e.stopPropagation();
             const isOpen = content.classList.toggle("open");
@@ -192,7 +180,6 @@ function createTreeElement(item) {
             openFile(item);
         };
     }
-
     return container;
 }
 
@@ -200,59 +187,79 @@ function openFile(item) {
     editorView.innerHTML = "";
     if (item.type === "image") {
         const div = document.createElement("div");
-        div.className = "editor-image-container";
+        div.className = "editor-image-view";
         const img = document.createElement("img");
         img.src = item.content;
         div.appendChild(img);
         editorView.appendChild(div);
     } else {
         const textarea = document.createElement("textarea");
+        textarea.className = "editor-textarea";
         textarea.value = item.content;
-        textarea.readOnly = false;
         editorView.appendChild(textarea);
     }
 }
 
-// =================== Menu e Eventos ===================
-plusBtn.onclick = (e) => {
-    e.stopPropagation();
-    const isVisible = addMenu.style.display === "flex";
-    if (isVisible) {
-        addMenu.style.display = "none";
-    } else {
-        addMenu.style.display = "flex";
-        const rect = plusBtn.getBoundingClientRect();
-        addMenu.style.bottom = (window.innerHeight - rect.top + 10) + "px";
-        addMenu.style.left = rect.left + "px";
+// =================== Handlers de Input (Processamento Robusto) ===================
+async function processFiles(filesList, isImage = false) {
+    clearWorkspace();
+    const filesArray = Array.from(filesList);
+    
+    const tasks = filesArray.map(file => {
+        return new Promise((resolve) => {
+            if (isImage) {
+                const url = URL.createObjectURL(file);
+                addToTree(file.name, url, "image");
+                resolve();
+            } else {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const path = file.webkitRelativePath || file.name;
+                    addToTree(path, reader.result, "text");
+                    resolve();
+                };
+                reader.readAsText(file);
+            }
+        });
+    });
+
+    await Promise.all(tasks);
+    renderExplorer();
+}
+
+document.getElementById('fileInput').onchange = (e) => processFiles(e.target.files);
+document.getElementById('folderInput').onchange = (e) => processFiles(e.target.files);
+document.getElementById('imageInput').onchange = (e) => processFiles(e.target.files, true);
+
+// =================== Outros Handlers ===================
+function copyText(btn) {
+    const content = btn.parentElement.nextElementSibling.innerText;
+    navigator.clipboard.writeText(content).then(() => {
+        const oldText = btn.innerText; btn.innerText = "Copiado!";
+        setTimeout(() => btn.innerText = oldText, 2000);
+    });
+}
+
+sendBtn.onclick = () => {
+    const text = promptInput.value.trim();
+    if (text) {
+        const msg = document.createElement("div");
+        msg.className = "message";
+        msg.innerHTML = `<div class="message-header"><span>AI Response</span><button class="copy-btn" onclick="copyText(this)">Copiar</button></div><div class="message-content">Resultado para: ${text}</div>`;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        promptInput.value = "";
     }
 };
 
+plusBtn.onclick = (e) => { 
+    e.stopPropagation(); 
+    addMenu.style.display = addMenu.style.display === "flex" ? "none" : "flex"; 
+    const rect = plusBtn.getBoundingClientRect(); 
+    addMenu.style.bottom = (window.innerHeight - rect.top + 15) + "px"; 
+    addMenu.style.left = rect.left + "px"; 
+};
 document.addEventListener("click", () => addMenu.style.display = "none");
-
-// Handlers de Input
-document.getElementById('fileInput').addEventListener('change', (e) => {
-    Array.from(e.target.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => addToTree(file.name, reader.result, "text");
-        reader.readAsText(file);
-    });
-});
-
-document.getElementById('folderInput').addEventListener('change', (e) => {
-    Array.from(e.target.files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => addToTree(file.webkitRelativePath, reader.result, "text");
-        reader.readAsText(file);
-    });
-});
-
-document.getElementById('imageInput').addEventListener('change', (e) => {
-    Array.from(e.target.files).forEach(file => {
-        const url = URL.createObjectURL(file);
-        addToTree(file.name, url, "image");
-    });
-});
 </script>
-
 </body>
 </html>
