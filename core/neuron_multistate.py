@@ -3,7 +3,15 @@ import random
 
 class MultiStateNeuron:
     def __init__(self, states=5):
+
         self.states = states
+
+        self.categories = [
+            "texto",
+            "codigo",
+            "matematica",
+            "planejamento"
+        ]
 
         self.memory = {
             i: [] for i in range(states)
@@ -15,10 +23,8 @@ class MultiStateNeuron:
 
         self.affinity = {
             i: {
-                "texto": 1.0,
-                "codigo": 1.0,
-                "matematica": 1.0,
-                "planejamento": 1.0
+                cat: 1.0
+                for cat in self.categories
             }
             for i in range(states)
         }
@@ -31,16 +37,18 @@ class MultiStateNeuron:
 
             affinity = self.affinity[state][category]
 
-            fatigue = self.usage[state] * 0.002
+            fatigue = self.usage[state] * 0.0005
 
             exploration = random.uniform(
                 0,
-                0.5
+                0.3
             )
 
-            score = affinity + exploration - fatigue
-
-            scores[state] = score
+            scores[state] = (
+                affinity
+                + exploration
+                - fatigue
+            )
 
         winner = max(
             scores,
@@ -49,15 +57,46 @@ class MultiStateNeuron:
 
         return winner
 
+    def normalize_category(self, category):
+
+        total = sum(
+            self.affinity[s][category]
+            for s in range(self.states)
+        )
+
+        if total == 0:
+            return
+
+        target_total = self.states
+
+        for state in range(self.states):
+
+            self.affinity[state][category] = (
+                self.affinity[state][category]
+                / total
+            ) * target_total
+
     def learn(
         self,
-        state,
+        winner,
         category
     ):
 
-        self.affinity[state][category] += 0.1
+        self.affinity[winner][category] += 0.10
 
-        self.usage[state] += 1
+        for state in range(self.states):
+
+            if state != winner:
+
+                self.affinity[state][category] -= 0.02
+
+                if self.affinity[state][category] < 0.10:
+
+                    self.affinity[state][category] = 0.10
+
+        self.normalize_category(category)
+
+        self.usage[winner] += 1
 
     def forward(
         self,
