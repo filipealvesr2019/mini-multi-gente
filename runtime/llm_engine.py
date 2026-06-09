@@ -1,7 +1,12 @@
-class LLMEngine:
-    def __init__(self, models):
-        self.models = models  # {"default": model_obj, "react": model_obj, ...}
+# runtime/llm_engine.py
+from pathlib import Path
 
-    def run(self, agent_role, skill, prompt):
-        model = self.models.get(skill, self.models["default"])
-        return model.generate(prompt)  # ou chamar API local
+class LLM:
+    def __init__(self, model_path: str):
+        self.model_path = Path(model_path)
+        print(f"Carregando modelo LLM: {self.model_path.name}")
+        # Aqui você poderia inicializar a API real do modelo, local ou Hugging Face
+
+    def generate(self, prompt: str) -> str:
+        # Por enquanto simula retorno
+        return f"Conteúdo gerado para: {prompt[:50]}..."

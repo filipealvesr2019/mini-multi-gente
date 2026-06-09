@@ -1,0 +1,8 @@
+Executando subtask: Criar style.css
+Responsável: Ana
+
+Progresso: 20%
+Progresso: 40%
+Progresso: 60%
+Progresso: 80%
+Progresso: 100%

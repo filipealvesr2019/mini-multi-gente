@@ -1,76 +1,32 @@
+# runtime/router.py
+from core.neuron_multistate import SistemaMultiEstado
+from runtime.company_config import COMPANY_CONFIG
 import numpy as np
 
-from runtime.company_config import COMPANY_CONFIG
-from core.neuron_multistate import SistemaMultiEstado
+# Inicializa o Sistema Multi-Estado do router
+router_brain = SistemaMultiEstado()
 
-CATEGORIAS = []
+# Categorias possíveis (skills principais)
+CATEGORIAS = ["texto", "codigo", "matematica", "planejamento", "react", "css", "prompts"]
 
-for dep in COMPANY_CONFIG["departments"]:
-
-    for skill in dep["manager"]["skills"]:
-
-        if skill not in CATEGORIAS:
-            CATEGORIAS.append(skill)
-
-    for worker in dep["workers"]:
-
-        for skill in worker["skills"]:
-
-            if skill not in CATEGORIAS:
-                CATEGORIAS.append(skill)
-
-MAX_WORKERS = max(
-    len(dep["workers"])
-    for dep in COMPANY_CONFIG["departments"]
-)
-
-router_brain = SistemaMultiEstado(
-    num_estados=MAX_WORKERS,
-    categorias=CATEGORIAS
-)
-
-
-def escolher_worker_inteligente(
-    workers,
-    categoria
-):
-
-    if len(workers) == 1:
-        return workers[0], 0
-
+def escolher_worker_inteligente(workers, categoria):
+    """
+    Escolhe um worker baseado na afinidade do router.
+    Retorna: (worker, estado)
+    """
     if categoria not in CATEGORIAS:
+        raise ValueError(f"Categoria '{categoria}' não está registrada no router.")
 
-        idx = np.random.randint(
-            0,
-            len(workers)
-        )
-
-        return workers[idx], idx
-
-    cat_idx = CATEGORIAS.index(categoria)
-
-    pesos = (
-        router_brain.affinity[
-            :len(workers),
-            cat_idx
-        ]
-        + 0.1
-    )
-
+    idx = CATEGORIAS.index(categoria)
+    # Cria pesos baseados na afinidade do router
+    pesos = router_brain.affinity[:len(workers), idx] + 0.1
     prob = pesos / pesos.sum()
-
-    estado_escolhido = np.random.choice(
-        range(len(workers)),
-        p=prob
-    )
-
-    return (
-        workers[estado_escolhido],
-        estado_escolhido
-    )
-
+    estado_escolhido = np.random.choice(range(len(workers)), p=prob)
+    return workers[estado_escolhido], estado_escolhido
 
 def feedback_task(categoria):
-
+    """
+    Envia feedback para o router aprender com a execução da skill.
+    """
     if categoria in CATEGORIAS:
         router_brain.step(categoria)
