@@ -1,5 +1,4 @@
 from core.neuron_multistate import MultiStateNeuron
-import hashlib
 
 class V4Layer:
     def __init__(self, num_neurons=8, states=5):
@@ -8,7 +7,7 @@ class V4Layer:
     def forward(self, x):
         outputs = []
         for i, neuron in enumerate(self.neurons):
-            # combina input com índice do neurônio para diversificar
+            # adiciona índice para diversificar hash
             input_i = f"{x}_{i}"
             outputs.append(neuron.forward(input_i))
-        return outputs
+        return outputs  # retorna todos os neurônios

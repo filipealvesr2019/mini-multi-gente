@@ -1,5 +1,5 @@
 class MultiStateNeuron:
-    def __init__(self, states=2):
+    def __init__(self, states=3):
         self.states = states
         self.memory = {i: [] for i in range(states)}
 
@@ -9,4 +9,5 @@ class MultiStateNeuron:
         return f"state_{state}_output"
 
     def select_state(self, x):
+        # Usa hash para distribuir inputs nos estados
         return hash(str(x)) % self.states

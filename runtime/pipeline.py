@@ -9,7 +9,19 @@ class MultiOrgSystem:
         self.worker = WorkerAgent()
 
     def run(self, project_input):
+        print("\nINPUT:")
+        print(project_input)
+
         plan = self.ceo.forward(project_input)
+        print("\nCEO outputs:")
+        print(plan)
+
         refined = self.manager.forward(plan)
+        print("\nManager outputs:")
+        print(refined)
+
         result = self.worker.forward(refined)
+        print("\nWorker outputs:")
+        print(result)
+
         return result
