@@ -94,3 +94,5 @@ symbols.json
 # Ignorar modelos grandes
 models/
 *.gguf
+
+.pyc
