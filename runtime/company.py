@@ -3,7 +3,6 @@ from runtime.department import Department
 from runtime.task import Task
 from runtime.company_config import COMPANY_CONFIG
 
-
 class Company:
 
     def __init__(self):
