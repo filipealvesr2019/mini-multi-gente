@@ -1,9 +1,16 @@
 # runtime/worker.py
+import time
+
 class Worker:
     def __init__(self, especialidade):
         self.especialidade = especialidade
+        self.status = "aguardando"
+        self.current_task = None
 
     def execute(self, tarefa):
-        # Aqui você pode chamar o modelo Qwen 1.5B
-        # Por enquanto, apenas simula a resposta
+        self.status = "executando"
+        self.current_task = tarefa
+        time.sleep(0.5)  # simula processamento
+        self.status = "concluído"
+        self.current_task = None
         return f"[{self.especialidade.upper()}] Processado: {tarefa}"
