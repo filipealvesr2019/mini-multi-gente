@@ -1,24 +1,77 @@
-import os
+import random
+
 
 class MultiStateNeuron:
-    def __init__(self, states=3):
+    def __init__(self, states=5):
         self.states = states
-        self.memory = {i: [] for i in range(states)}
 
-    def forward(self, x):
-        state = self.select_state(x)
-        self.memory[state].append(x)
-        return f"state_{state}_output"
+        self.memory = {
+            i: [] for i in range(states)
+        }
 
-    def select_state(self, x):
-        # Usa hash para distribuir inputs nos estados
-        return hash(str(x)) % self.states
+        self.usage = {
+            i: 0 for i in range(states)
+        }
 
-        import json
+        self.affinity = {
+            i: {
+                "texto": 1.0,
+                "codigo": 1.0,
+                "matematica": 1.0,
+                "planejamento": 1.0
+            }
+            for i in range(states)
+        }
 
-def log_neuron(agent_name, neuron_idx, input_value, output_value):
-    os.makedirs("logs", exist_ok=True)
-    log_file = f"logs/{agent_name}_neuron_{neuron_idx}.json"
-    with open(log_file, "a") as f:
-        json.dump({"input": input_value, "output": output_value}, f)
-        f.write("\n")
+    def compete(self, category):
+
+        scores = {}
+
+        for state in range(self.states):
+
+            affinity = self.affinity[state][category]
+
+            fatigue = self.usage[state] * 0.002
+
+            exploration = random.uniform(
+                0,
+                0.5
+            )
+
+            score = affinity + exploration - fatigue
+
+            scores[state] = score
+
+        winner = max(
+            scores,
+            key=scores.get
+        )
+
+        return winner
+
+    def learn(
+        self,
+        state,
+        category
+    ):
+
+        self.affinity[state][category] += 0.1
+
+        self.usage[state] += 1
+
+    def forward(
+        self,
+        x,
+        category
+    ):
+
+        winner = self.compete(category)
+
+        self.memory[winner].append(x)
+
+        self.learn(
+            winner,
+            category
+        )
+
+        return winner
