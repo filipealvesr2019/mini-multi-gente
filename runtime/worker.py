@@ -1,6 +1,7 @@
 import random
 import time
 import threading
+from runtime.performance_tracker import tracker
 
 
 class Worker:
@@ -17,6 +18,8 @@ class Worker:
         self.thread = None
 
     def run_task(self, tarefa):
+        start = time.time()  # <--- iniciar timer
+
         if not self.dependency_done:
             self.status = "aguardando dependência"
             while not self.dependency_done:
@@ -42,6 +45,11 @@ class Worker:
         self.status = "concluído"
         self.progress = 100
         self.current_task = None
+
+        # registra tempo de execução
+        duration = time.time() - start
+        tracker.record(self.nome, duration)
+
         return f"[{self.nome}] Processado: {tarefa}"
 
     def start_task(self, tarefa):

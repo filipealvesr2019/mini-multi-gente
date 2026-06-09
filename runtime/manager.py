@@ -1,9 +1,9 @@
 from concurrent.futures import ThreadPoolExecutor
 import threading
 import time
-from .worker import Worker
-from .router import Router
-from .command_bus import CommandBus
+from runtime.worker import Worker, tracker
+from runtime.router import Router
+from runtime.command_bus import CommandBus
 
 
 class Manager:
@@ -33,7 +33,7 @@ class Manager:
             print("=" * 60)
             concluidos = 0
             for w in self.workers:
-                print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}%")
+                print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}% | avg {tracker.average_time(w.nome):.2f}s")
                 if w.status == "concluído":
                     concluidos += 1
             if concluidos == len(self.workers):
@@ -41,14 +41,15 @@ class Manager:
             time.sleep(1)
 
     def execute_subtasks(self, subtasks):
-        # dependências simples
         dep_map = {
             "planejamento": [],
             "codigo": ["planejamento"],
             "texto": ["codigo"],
             "matematica": ["texto"]
         }
+
         name_map = {w.especialidade: w for w in self.workers}
+
         for key, deps in dep_map.items():
             for dep in deps:
                 if dep in name_map:
@@ -58,11 +59,18 @@ class Manager:
         dashboard.start()
 
         def executar(sub):
-            worker = self.router.choose_worker(self.workers, sub["categoria"])
+            # escolhe worker com melhor performance
+            candidates = [w for w in self.workers if w.especialidade == sub["categoria"]]
+            if not candidates:
+                worker = self.workers[0]
+            else:
+                worker = min(candidates, key=lambda w: tracker.average_time(w.nome))
+
             worker.dependency_done = all(
                 name_map[d].status == "concluído" for d in dep_map[sub["categoria"]]
             )
             res = worker.run_task(sub["conteudo"])
+
             for k, deps in dep_map.items():
                 if sub["categoria"] in deps:
                     name_map[k].dependency_done = True
@@ -84,7 +92,7 @@ class Manager:
             return
         if tokens[0].lower() == "status":
             for w in self.workers:
-                print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}%")
+                print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}% | avg {tracker.average_time(w.nome):.2f}s")
         elif tokens[0].lower() == "tarefas":
             for w in self.workers:
                 print(f"{w.nome:<12}{w.current_task}")
