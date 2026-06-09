@@ -104,11 +104,26 @@ body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:
 let fileSystemRoot = { name: "root", type: "folder", children: {} };
 const explorerEl = document.getElementById("explorer");
 const editorView = document.getElementById("editor-view");
-const chatMessages = document.getElementById("chatMessages");
-const promptInput = document.getElementById("promptInput");
+import { handlePromptFromUI } from './agent.js';
+
 const sendBtn = document.getElementById("sendBtn");
+const promptInput = document.getElementById("promptInput");
+const chatMessages = document.getElementById("chatMessages");
+
+sendBtn.onclick = async () => {
+    const text = promptInput.value.trim();
+    if (!text) return;
+
+    // Processar via agente
+    await handlePromptFromUI(text, chatMessages);
+
+    // Limpar input
+    promptInput.value = "";
+};
 const plusBtn = document.getElementById("plusBtn");
 const addMenu = document.getElementById("addMenu");
+
+
 
 // =================== Lógica de Limpeza e Árvore Robustecida ===================
 function clearWorkspace() {
