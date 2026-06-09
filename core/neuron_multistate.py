@@ -1,116 +1,24 @@
 import random
-
+from collections import defaultdict
 
 class MultiStateNeuron:
-    def __init__(self, states=5):
-
+    def __init__(self, states=5, categories=None):
         self.states = states
+        self.categories = categories or ["texto", "codigo", "matematica", "planejamento"]
+        self.usage_count = {i:0 for i in range(states)}
+        # afinidades por estado e categoria
+        self.affinities = {i:{cat:1.0 for cat in self.categories} for i in range(states)}
 
-        self.categories = [
-            "texto",
-            "codigo",
-            "matematica",
-            "planejamento"
-        ]
+    def forward(self, x, category):
+        # Seleciona o estado com maior afinidade
+        affinities = [self.affinities[s][category] for s in range(self.states)]
+        state = affinities.index(max(affinities))
+        # conta uso
+        self.usage_count[state] += 1
+        return state
 
-        self.memory = {
-            i: [] for i in range(states)
-        }
-
-        self.usage = {
-            i: 0 for i in range(states)
-        }
-
-        self.affinity = {
-            i: {
-                cat: 1.0
-                for cat in self.categories
-            }
-            for i in range(states)
-        }
-
-    def compete(self, category):
-
-        scores = {}
-
-        for state in range(self.states):
-
-            affinity = self.affinity[state][category]
-
-            fatigue = self.usage[state] * 0.0005
-
-            exploration = random.uniform(
-                0,
-                0.3
-            )
-
-            scores[state] = (
-                affinity
-                + exploration
-                - fatigue
-            )
-
-        winner = max(
-            scores,
-            key=scores.get
-        )
-
-        return winner
-
-    def normalize_category(self, category):
-
-        total = sum(
-            self.affinity[s][category]
-            for s in range(self.states)
-        )
-
-        if total == 0:
-            return
-
-        target_total = self.states
-
-        for state in range(self.states):
-
-            self.affinity[state][category] = (
-                self.affinity[state][category]
-                / total
-            ) * target_total
-
-    def learn(
-        self,
-        winner,
-        category
-    ):
-
-        self.affinity[winner][category] += 0.10
-
-        for state in range(self.states):
-
-            if state != winner:
-
-                self.affinity[state][category] -= 0.02
-
-                if self.affinity[state][category] < 0.10:
-
-                    self.affinity[state][category] = 0.10
-
-        self.normalize_category(category)
-
-        self.usage[winner] += 1
-
-    def forward(
-        self,
-        x,
-        category
-    ):
-
-        winner = self.compete(category)
-
-        self.memory[winner].append(x)
-
-        self.learn(
-            winner,
-            category
-        )
-
-        return winner
+    def update_affinity(self, state, category, delta=0.05):
+        self.affinities[state][category] += delta
+        # manter valores razoáveis
+        if self.affinities[state][category] > 1000:
+            self.affinities[state][category] = 1000
