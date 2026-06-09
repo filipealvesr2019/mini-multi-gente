@@ -96,3 +96,31 @@ models/
 *.gguf
 
 .pyc
+
+
+# Ignore logs de workers
+workspace/logs/
+
+# Ignore arquivos temporários de projeto se quiser
+#workspace/projects/
+
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambiente virtual
+venv/
+env/
+*.env
+
+# Arquivos de sistema do Windows
+Thumbs.db
+Desktop.ini
+
+# Arquivos de logs gerais
+*.log

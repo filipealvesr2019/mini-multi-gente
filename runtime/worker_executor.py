@@ -1,35 +1,43 @@
 import time
 import random
-from pathlib import Path
+from runtime.workspace_manager import WorkspaceManager
 
 class WorkerExecutor:
 
     @staticmethod
-    def execute(worker, subtask):
+    def execute(worker, subtask, project_name="IDE_Multi_Agente"):
+
         start_time = time.time()
         print(f"\n[{worker.name}] recebeu: {subtask}")
 
-        # Definir pasta do workspace
-        workspace = Path("workspace")
-        workspace.mkdir(exist_ok=True)
-
-        # Criar pastas por departamento ou worker (opcional)
-        worker_dir = workspace / worker.name
-        worker_dir.mkdir(exist_ok=True)
-
-        # Nome do arquivo baseado na subtask
-        filename = worker_dir / f"{subtask.replace(' ', '_')}.txt"
-
-        # Simular progresso e criar conteúdo inicial
-        content = f"Executando subtask: {subtask}\nResponsável: {worker.name}\n\n"
+        # Simulação de progresso
         for p in [20, 40, 60, 80, 100]:
-            time.sleep(random.uniform(0.1, 0.5))  # tempo de execução
-            content += f"Progresso: {p}%\n"
+            time.sleep(random.uniform(0.3, 1.0))
             print(f"[{worker.name}] {subtask} {p}%")
 
-        # Escrever arquivo
-        filename.write_text(content, encoding="utf-8")
+        # Conteúdo simulado do arquivo
+        content = f"{worker.name} executou: {subtask}"
 
-        end_time = time.time()
-        elapsed = end_time - start_time
-        print(f"[{worker.name}] ENTREGOU {subtask} em {elapsed:.2f}s -> {filename}")
+        # Salva no projeto final
+        project_path = subtask_to_path(subtask)
+        WorkspaceManager.save_project_file(project_name, project_path, content)
+
+        # Salva no log do worker
+        WorkspaceManager.save_worker_log(worker.name, subtask, content)
+
+        elapsed = time.time() - start_time
+        print(f"[{worker.name}] ENTREGOU {subtask} em {elapsed:.2f}s -> {project_path}")
+
+
+def subtask_to_path(subtask):
+    """
+    Define onde cada subtask deve ir dentro do projeto final
+    """
+    if subtask == "Criar App.jsx":
+        return "frontend/App.jsx"
+    elif subtask == "Criar style.css":
+        return "frontend/style.css"
+    elif subtask == "Criar prompts":
+        return "prompts/system_prompt.md"
+    else:
+        return f"misc/{subtask.replace(' ', '_')}.txt"

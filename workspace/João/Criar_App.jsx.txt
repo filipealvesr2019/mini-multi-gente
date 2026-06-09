@@ -1,8 +1,0 @@
-Executando subtask: Criar App.jsx
-Responsável: João
-
-Progresso: 20%
-Progresso: 40%
-Progresso: 60%
-Progresso: 80%
-Progresso: 100%
