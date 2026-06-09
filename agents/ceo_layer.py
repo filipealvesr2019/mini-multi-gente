@@ -5,4 +5,6 @@ class CEOAgent:
         self.layer = V4Layer(num_neurons=4, states=3)
 
     def forward(self, task):
-        return self.layer.forward(task)
+        # Gera um plano de texto para cada neurônio
+        plan = [f"{task} - passo {i}" for i in range(self.layer.num_neurons)]
+        return plan
