@@ -1,13 +1,11 @@
 from concurrent.futures import ThreadPoolExecutor
 import threading
 import time
-
 from .worker import Worker
 from .router import Router
 
 
 class Manager:
-
     def __init__(self):
         self.router = Router()
         self.workers = [
@@ -28,9 +26,9 @@ class Manager:
     def dashboard_loop(self):
         while True:
             print("\n" * 2)
-            print("=" * 50)
+            print("=" * 60)
             print("CEO DASHBOARD")
-            print("=" * 50)
+            print("=" * 60)
             concluidos = 0
             for w in self.workers:
                 print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}%")
@@ -41,7 +39,7 @@ class Manager:
             time.sleep(1)
 
     def execute_subtasks(self, subtasks):
-        # Configurar dependências simples
+        # dependências simples
         dep_map = {
             "planejamento": [],
             "codigo": ["planejamento"],
@@ -59,12 +57,10 @@ class Manager:
 
         def executar(sub):
             worker = self.router.choose_worker(self.workers, sub["categoria"])
-            # marcar dependências como feitas antes de começar
             worker.dependency_done = all(
                 name_map[d].status == "concluído" for d in dep_map[sub["categoria"]]
             )
             res = worker.execute(sub["conteudo"])
-            # liberar dependentes
             for k, deps in dep_map.items():
                 if sub["categoria"] in deps:
                     name_map[k].dependency_done = True
@@ -78,3 +74,32 @@ class Manager:
 
         dashboard.join()
         return resultados
+
+    # comandos humanos
+    def command(self, cmd):
+        tokens = cmd.strip().split()
+        if not tokens:
+            return
+        if tokens[0].lower() == "status":
+            for w in self.workers:
+                print(f"{w.nome:<12}{w.especialidade:<15}{w.status:<20}{w.progress}%")
+        elif tokens[0].lower() == "tarefas":
+            for w in self.workers:
+                print(f"{w.nome:<12}{w.current_task}")
+        elif tokens[0].lower() == "parar" and len(tokens) == 2:
+            for w in self.workers:
+                if w.nome.lower() == tokens[1].lower():
+                    w.paused = True
+                    print(f"{w.nome} pausado")
+        elif tokens[0].lower() == "reiniciar" and len(tokens) == 2:
+            for w in self.workers:
+                if w.nome.lower() == tokens[1].lower():
+                    w.paused = False
+                    print(f"{w.nome} reiniciado")
+        elif tokens[0].lower() == "prioridade" and len(tokens) == 2:
+            # para V6, só printa
+            for w in self.workers:
+                if w.nome.lower() == tokens[1].lower():
+                    print(f"{w.nome} agora tem prioridade!")
+        else:
+            print("Comando desconhecido")
