@@ -1,57 +1,63 @@
-from runtime.department import Department
 from runtime.agent import Agent
-from runtime.company_config import COMPANY
+from runtime.department import Department
+from runtime.task import Task
+from runtime.company_config import COMPANY_CONFIG
+
 
 class Company:
 
     def __init__(self):
-
+        self.ceos = []
         self.departments = []
+        self.load_config()
 
-        for dep_cfg in COMPANY["departments"]:
-
-            dep = Department(dep_cfg["name"])
-
-            manager_cfg = dep_cfg["manager"]
-
-            manager = Agent(
-                name=manager_cfg["name"],
-                persona=manager_cfg["persona"],
-                skills=manager_cfg["skills"],
-                authority=50,
-                tipo="manager",
-                bus=None
+    def load_config(self):
+        for ceo_data in COMPANY_CONFIG["ceos"]:
+            ceo = Agent(
+                name=ceo_data["name"],
+                role="CEO",
+                persona=ceo_data["persona"],
+                skills=ceo_data["skills"],
+                authority=100
             )
+            self.ceos.append(ceo)
 
-            dep.add_manager(manager)
-
-            for worker_cfg in dep_cfg["workers"]:
-
+        for dep_data in COMPANY_CONFIG["departments"]:
+            manager = Agent(
+                name=dep_data["manager"]["name"],
+                role="Manager",
+                persona=dep_data["manager"]["persona"],
+                skills=dep_data["manager"]["skills"],
+                authority=50
+            )
+            department = Department(dep_data["name"], manager)
+            for worker_data in dep_data["workers"]:
                 worker = Agent(
-                    name=worker_cfg["name"],
-                    persona=worker_cfg["persona"],
-                    skills=worker_cfg["skills"],
-                    authority=10,
-                    tipo="worker",
-                    bus=None
+                    name=worker_data["name"],
+                    role="Worker",
+                    persona=worker_data["persona"],
+                    skills=worker_data["skills"],
+                    authority=10
                 )
-
-                dep.add_worker(worker)
-
-            self.departments.append(dep)
+                department.add_worker(worker)
+            self.departments.append(department)
 
     def show_structure(self):
-
         print("\nEMPRESA\n")
-
+        print("CEOs:")
+        for ceo in self.ceos:
+            print(f"  {ceo.name}")
+        print()
         for dep in self.departments:
-
             print(f"Departamento: {dep.name}")
-
-            for m in dep.managers:
-                print(f"  Manager: {m.name}")
-
-            for w in dep.workers:
-                print(f"  Worker: {w.name}")
-
+            print(f"  Manager: {dep.manager.name}")
+            for worker in dep.workers:
+                print(f"  Worker: {worker.name}")
             print()
+
+    def create_task(self, task_title):
+        task = Task(task_title)
+        print("\nCEO criou tarefa:")
+        print(f"  {task.title}")
+        for department in self.departments:
+            department.assign_task(task)

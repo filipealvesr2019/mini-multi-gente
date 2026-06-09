@@ -1,42 +1,10 @@
-# runtime/agent.py
-
 class Agent:
-    def __init__(
-        self,
-        name,
-        persona,
-        skills,
-        authority,
-        tipo,
-        bus,
-        likes=None,
-        dislikes=None,
-        goals=None,
-        rules=None
-    ):
+    def __init__(self, name, role, persona, skills=None, authority=0):
         self.name = name
+        self.role = role
         self.persona = persona
-        self.skills = skills
+        self.skills = skills or []
         self.authority = authority
-        self.tipo = tipo
-        self.bus = bus
 
-        self.likes = likes or []
-        self.dislikes = dislikes or []
-        self.goals = goals or []
-        self.rules = rules or []
-
-        self.status = "idle"
-        self.progress = 0
-        self.current_task = None
-        self.paused = False
-        self.memory = []
-
-    def log(self, msg):
-        self.memory.append(msg)
-
-    def pause(self):
-        self.paused = True
-
-    def resume(self):
-        self.paused = False
+    def __str__(self):
+        return f"{self.role}: {self.name} ({self.persona}) skills={self.skills}"
