@@ -1,23 +1,18 @@
-# runtime/run_company.py
+from runtime.company import Company
 
-from runtime.manager import Manager
-from runtime.performance_tracker import tracker
+def main():
+    # Inicializa a empresa com departamentos, managers e workers
+    empresa = Company()
+
+    # Mostra a estrutura da empresa
+    empresa.show_structure()
+
+    # Cria tarefas
+    tarefas = ["Projeto IDE Multi-Agente"]
+
+    for tarefa in tarefas:
+        print(f"\n🚀 Nova tarefa: {tarefa}")
+        empresa.create_task(tarefa)
 
 if __name__ == "__main__":
-    manager = Manager()
-    tarefas = ["Criar sistema React completo"]
-
-    subtasks = []
-    for t in tarefas:
-        subtasks.extend(manager.divide_task(t))
-
-    resultados = manager.execute_subtasks(subtasks)
-
-    print("\n📊 RESULTADOS FINAIS:")
-    for r in resultados:
-        print(r)
-
-    print("\n📊 RELATÓRIO DE PERFORMANCE:")
-    for worker, skills in tracker.report().items():
-        for skill, stats in skills.items():
-            print(f"{worker} ({skill}): {stats['tasks']} tarefas, média {stats['average_time']:.2f}s")
+    main()
