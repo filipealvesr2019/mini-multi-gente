@@ -4,22 +4,18 @@ import random
 class WorkerExecutor:
 
     @staticmethod
-    def execute(worker, task):
+    def execute(worker, subtask):
 
-        task.status = "running"
+        start_time = time.time()  # Início do timer
 
-        for p in [10, 30, 50, 70, 90, 100]:
+        print()
+        print(f"[{worker.name}] recebeu: {subtask}")
 
-            time.sleep(random.uniform(0.5, 1.2))
+        for p in [20, 40, 60, 80, 100]:
+            time.sleep(random.uniform(0.3, 1.0))  # simula tempo de trabalho
+            print(f"[{worker.name}] {subtask} {p}%")
 
-            task.update(p)
+        end_time = time.time()  # Fim do timer
+        elapsed = end_time - start_time
 
-            print(
-                f"[{worker.name}] "
-                f"{worker.persona} "
-                f"{p}%"
-            )
-
-        print(
-            f"[{worker.name}] FINALIZOU"
-        )
+        print(f"[{worker.name}] ENTREGOU {subtask} em {elapsed:.2f}s")
