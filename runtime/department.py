@@ -1,7 +1,7 @@
 import threading
-from pathlib import Path
 from runtime.worker_executor import WorkerExecutor
 from runtime.router import escolher_worker_inteligente, feedback_task
+
 
 class Department:
 
@@ -14,61 +14,77 @@ class Department:
         self.workers.append(worker)
 
     def assign_task(self, task):
-        """
-        Divide uma task em subtasks por skill do departamento
-        e envia para execução paralela pelos workers.
-        """
+
         print()
-        print(f"[{self.name}] planejando tarefa")
+        print(f"[{self.name}] analisando tarefa")
 
-        subtasks = []
+        # -------------------------
+        # Descobre skills disponíveis
+        # -------------------------
 
-        # Definição de subtasks por departamento
-        if self.name == "Frontend":
-            subtasks.append(("Criar App.jsx", "react"))
-            subtasks.append(("Criar style.css", "css"))
-        elif self.name == "AI":
-            subtasks.append(("Criar prompts", "prompts"))
-        else:
-            # Fallback para departamentos sem regras
-            subtasks.append((task.title, None))
+        skills = set()
+
+        for worker in self.workers:
+            for skill in worker.skills:
+                skills.add(skill)
+
+        # -------------------------
+        # Cria operações dinâmicas
+        # -------------------------
+
+        operations = []
+
+        for skill in skills:
+
+            operations.append({
+                "skill": skill,
+                "task": task.title
+            })
+
+        # -------------------------
+        # Executa operações
+        # -------------------------
 
         threads = []
 
-        for subtask_title, required_skill in subtasks:
+        for op in operations:
 
-            selected_worker = None
-            estado = None
+            skill = op["skill"]
 
-            # Escolha inteligente usando router
-            if required_skill:
-                # Filtra apenas workers que têm a skill
-                eligible_workers = [w for w in self.workers if required_skill in w.skills]
-                if eligible_workers:
-                    selected_worker, estado = escolher_worker_inteligente(
-                        eligible_workers, required_skill
-                    )
-                else:
-                    print(f"Nenhum worker encontrado para skill: {required_skill}")
-                    continue
-            else:
-                # Se não há skill, pega o primeiro worker disponível
-                if self.workers:
-                    selected_worker = self.workers[0]
+            eligible_workers = [
+                w for w in self.workers
+                if skill in w.skills
+            ]
 
-            if selected_worker:
-                # Executa a subtask em thread
-                t = threading.Thread(
-                    target=WorkerExecutor.execute,
-                    args=(selected_worker, subtask_title)
+            if not eligible_workers:
+
+                print(
+                    f"[{self.name}] nenhum worker para skill {skill}"
                 )
-                t.start()
-                threads.append(t)
 
-                # Feedback para router aprender
-                if required_skill:
-                    feedback_task(required_skill)
+                continue
 
-        # Espera todas as threads terminarem
+            worker, estado = escolher_worker_inteligente(
+                eligible_workers,
+                skill
+            )
+
+            t = threading.Thread(
+                target=WorkerExecutor.execute,
+                args=(
+                    worker,
+                    task.title,
+                    skill
+                )
+            )
+
+            t.start()
+
+            threads.append(t)
+
+            feedback_task(skill)
+
         for t in threads:
             t.join()
+
+        print(f"[{self.name}] concluído")
