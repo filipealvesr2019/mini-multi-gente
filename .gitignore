@@ -1,0 +1,96 @@
+# =============================
+# Python
+# =============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+.env.local
+.env.*.local
+
+# =============================
+# Node / Next.js
+# =============================
+node_modules/
+.next/
+out/
+dist/
+*.log
+package-lock.json
+yarn.lock
+
+# =============================
+# JUCE / C++ / Builds
+# =============================
+*.exe
+*.dll
+*.obj
+*.o
+*.lib
+*.exp
+*.pdb
+*.app
+*.xcuserdata
+build/
+Builds/
+Debug/
+Release/
+*.dSYM
+*.xcodeproj
+*.vs
+*.idea
+
+# =============================
+# VSCode
+# =============================
+.vscode/
+.history/
+
+# =============================
+# OS Files
+# =============================
+.DS_Store
+Thumbs.db
+
+# =============================
+# Generated / Workspace Data
+# =============================
+memory/files/
+memory/dependencies/
+extracted_symbols/
+workspace_docs.json
+workspace.json
+symbols.json
+/workspace_test
+
+# Ignorar modelos grandes
+models/
+*.gguf
+
+
+# Arquivos e pastas que não quero subir
+# Ignorar workspace inteiro
+/workspace_test/
+memory/files/
+memory/dependencies/
+extracted_symbols/
+workspace_docs.json
+workspace.json
+symbols.json
+
+# Ignorar workspace temporário
+workspace_test/
+memory/files/
+memory/dependencies/
+extracted_symbols/
+workspace_docs.json
+workspace.json
+symbols.json
+
+# Ignorar modelos grandes
+models/
+*.gguf
