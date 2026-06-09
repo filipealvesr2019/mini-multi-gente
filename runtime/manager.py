@@ -13,47 +13,78 @@ class Manager:
         self.router = Router()
 
         self.workers = [
-            Worker("texto"),
-            Worker("codigo"),
-            Worker("matematica"),
-            Worker("planejamento")
+
+            Worker(
+                "Ana",
+                "texto"
+            ),
+
+            Worker(
+                "João",
+                "codigo"
+            ),
+
+            Worker(
+                "Pedro",
+                "matematica"
+            ),
+
+            Worker(
+                "Marina",
+                "planejamento"
+            )
+
         ]
 
     def divide_task(self, tarefa):
 
         return [
+
             {
                 "categoria": "texto",
-                "conteudo": f"Gerar interface e descrição: {tarefa}"
+                "conteudo": (
+                    "Criar interface e descrição"
+                )
             },
+
             {
                 "categoria": "codigo",
-                "conteudo": f"Gerar código base: {tarefa}"
+                "conteudo": (
+                    "Criar código React"
+                )
             },
+
             {
                 "categoria": "matematica",
-                "conteudo": f"Gerar cálculos: {tarefa}"
+                "conteudo": (
+                    "Implementar operações"
+                )
             },
+
             {
                 "categoria": "planejamento",
-                "conteudo": f"Planejar etapas e componentes: {tarefa}"
+                "conteudo": (
+                    "Planejar arquitetura"
+                )
             }
+
         ]
 
     def dashboard_loop(self):
 
         while True:
 
-            print("\n" * 2)
-            print("=" * 50)
+            print("\n")
+            print("=" * 60)
             print("CEO DASHBOARD")
-            print("=" * 50)
+            print("=" * 60)
 
             concluidos = 0
 
             for worker in self.workers:
 
                 print(
+                    f"{worker.nome:<12}"
                     f"{worker.especialidade:<15}"
                     f"{worker.status:<15}"
                     f"{worker.progress}%"
@@ -67,7 +98,7 @@ class Manager:
 
             time.sleep(1)
 
-    def execute_subtasks(self, subtarefas):
+    def execute_subtasks(self, subtasks):
 
         resultados = []
 
@@ -77,38 +108,34 @@ class Manager:
 
         dashboard.start()
 
-        def executar(sub):
+        def executar(subtask):
 
             worker = self.router.choose_worker(
                 self.workers,
-                sub["categoria"]
+                subtask["categoria"]
             )
 
-            print(
-                f"\n[{worker.especialidade.upper()}] INICIOU"
+            return worker.execute(
+                subtask["conteudo"]
             )
 
-            resultado = worker.execute(
-                sub["conteudo"]
-            )
-
-            print(
-                f"[{worker.especialidade.upper()}] TERMINOU"
-            )
-
-            return resultado
-
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(
+            max_workers=4
+        ) as executor:
 
             futures = [
+
                 executor.submit(
                     executar,
-                    sub
+                    subtask
                 )
-                for sub in subtarefas
+
+                for subtask in subtasks
+
             ]
 
             for future in futures:
+
                 resultados.append(
                     future.result()
                 )

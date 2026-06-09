@@ -1,6 +1,3 @@
-import random
-
-
 class Router:
 
     def choose_worker(
@@ -11,12 +8,7 @@ class Router:
 
         for worker in workers:
 
-            if (
-                worker.especialidade
-                == categoria
-            ):
+            if worker.especialidade == categoria:
                 return worker
 
-        return random.choice(
-            workers
-        )
+        return workers[0]
