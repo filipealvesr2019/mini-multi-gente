@@ -1,17 +1,25 @@
+from queue import Queue
 from runtime.agent import Agent
 from runtime.department import Department
-from runtime.task import Task
 from runtime.company_config import COMPANY_CONFIG
+from runtime.task import Task
+
 
 class Company:
 
     def __init__(self):
+
+        self.task_queue = Queue()
+
         self.ceos = []
         self.departments = []
+
         self.load_config()
 
     def load_config(self):
+
         for ceo_data in COMPANY_CONFIG["ceos"]:
+
             ceo = Agent(
                 name=ceo_data["name"],
                 role="CEO",
@@ -19,9 +27,11 @@ class Company:
                 skills=ceo_data["skills"],
                 authority=100
             )
+
             self.ceos.append(ceo)
 
         for dep_data in COMPANY_CONFIG["departments"]:
+
             manager = Agent(
                 name=dep_data["manager"]["name"],
                 role="Manager",
@@ -29,8 +39,14 @@ class Company:
                 skills=dep_data["manager"]["skills"],
                 authority=50
             )
-            department = Department(dep_data["name"], manager)
+
+            department = Department(
+                dep_data["name"],
+                manager
+            )
+
             for worker_data in dep_data["workers"]:
+
                 worker = Agent(
                     name=worker_data["name"],
                     role="Worker",
@@ -38,7 +54,9 @@ class Company:
                     skills=worker_data["skills"],
                     authority=10
                 )
+
                 department.add_worker(worker)
+
             self.departments.append(department)
 
     def show_structure(self):
@@ -55,8 +73,18 @@ class Company:
             print()
 
     def create_task(self, task_title):
+
         task = Task(task_title)
-        print("\nCEO criou tarefa:")
-        print(f"  {task.title}")
-        for department in self.departments:
-            department.assign_task(task)
+
+        self.task_queue.put(task)
+
+        print("\nCEO criou:")
+        print(task.title)
+
+        while not self.task_queue.empty():
+
+            current = self.task_queue.get()
+
+            for dep in self.departments:
+
+                dep.assign_task(current)

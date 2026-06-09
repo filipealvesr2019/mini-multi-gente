@@ -1,23 +1,25 @@
-import os
+import time
+import random
 
 class WorkerExecutor:
 
     @staticmethod
     def execute(worker, task):
 
-        if worker.name == "João":
-            os.makedirs("workspace/frontend", exist_ok=True)
-            with open("workspace/frontend/App.jsx", "w", encoding="utf8") as f:
-                f.write("// React App\n")
+        task.status = "running"
 
-        elif worker.name == "Ana":
-            os.makedirs("workspace/frontend", exist_ok=True)
-            with open("workspace/frontend/style.css", "w", encoding="utf8") as f:
-                f.write("body{}")
+        for p in [10, 30, 50, 70, 90, 100]:
 
-        elif worker.name == "Marina":
-            os.makedirs("workspace/docs", exist_ok=True)
-            with open("workspace/docs/README.md", "w", encoding="utf8") as f:
-                f.write("# Projeto\n")
+            time.sleep(random.uniform(0.5, 1.2))
 
-        print(f"{worker.name} entregou artefato")
+            task.update(p)
+
+            print(
+                f"[{worker.name}] "
+                f"{worker.persona} "
+                f"{p}%"
+            )
+
+        print(
+            f"[{worker.name}] FINALIZOU"
+        )
