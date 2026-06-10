@@ -1,21 +1,16 @@
 from concurrent.futures import ThreadPoolExecutor
 from runtime.worker import Worker
 from runtime.router import escolher_worker_inteligente, feedback_task
-from runtime.company_config import COMPANY_CONFIG
 
 class Manager:
-
     def __init__(self):
         self.departments = []
-        self._load_workers()
 
-    def _load_workers(self):
-        for dep in COMPANY_CONFIG["departments"]:
-            workers = []
-            for w in dep["workers"]:
-                workers.append(Worker(w["name"], w["persona"], w["skills"]))
+    def load_company(self, company_data):
+        for dep_data in company_data.get("departments", []):
+            workers = [Worker(w["name"], w["persona"], w["skills"]) for w in dep_data["workers"]]
             self.departments.append({
-                "name": dep["name"],
+                "name": dep_data["name"],
                 "workers": workers
             })
 
