@@ -124,3 +124,9 @@ Desktop.ini
 
 # Arquivos de logs gerais
 *.log
+
+workspace/projects/
+
+workspace/logs/
+
+workspace/sandbox/
