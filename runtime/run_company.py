@@ -2,10 +2,25 @@ from runtime.auto_company_builder import AutoCompanyBuilder
 from runtime.company_registry import CompanyRegistry
 from runtime.manager import Manager
 from runtime.sandbox import Sandbox
+# run_company.py
+from runtime.llm_engine import llm
 
 def prompt_func(worker, op):
-    return f"{worker.name} executando {op['task_title']}"
+    prompt = f"""
+Você é {worker.name}.
 
+Especialidades:
+{", ".join(worker.skills)}
+
+Tarefa:
+{op['task_title']}
+
+Retorne apenas o resultado final.
+"""
+    return llm.generate(prompt)
+
+
+    
 def main():
     Sandbox.clear()
     Sandbox.init()
