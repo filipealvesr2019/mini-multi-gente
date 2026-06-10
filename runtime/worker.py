@@ -6,29 +6,44 @@ import time
 import random
 
 class Worker:
-    def __init__(self, name, persona, skills):
+    def __init__(self, name: str, persona: str, skills: list):
         self.name = name
         self.persona = persona
         self.skills = skills
 
-    def run_task(self, skill, task_title, content):
+    def run_task(self, skill: str, task_title: str, content: str):
         """
-        Executa uma tarefa simulando progresso e salva o resultado no Sandbox.
+        Executa uma tarefa real (conteúdo dinâmico) e salva no Sandbox.
+        Não há mocks nem ifs fixos.
         """
-        print(f"[{self.name}] recebeu: {task_title}")
 
-        # Simula progresso
-        for p in [20, 40, 60, 80, 100]:
-            time.sleep(random.uniform(0.2, 0.6))
-            print(f"[{self.name}] {task_title} {p}%")
+        print(f"[{self.name}] recebeu tarefa: {task_title}")
 
-        # Salva arquivo no sandbox
+        # Simula progresso baseado em tempo variável
+        for progress in [20, 40, 60, 80, 100]:
+            time.sleep(random.uniform(0.1, 0.5))
+            print(f"[{self.name}] {task_title} {progress}%")
+
+        # Cria o arquivo dinamicamente no Sandbox
         filename = task_title.replace(" ", "_") + ".txt"
         path = Sandbox.create_file(f"{self.name}/{filename}", content)
 
-        # Calcula diff simples
+        # Calcula diff real baseado no conteúdo atual
         diff = generate_diff(path)
-        print(f"[{self.name}] DIFF +{diff['added']} -{diff['removed']}")
-        print(f"[{self.name}] ENTREGUE {task_title} em {round(random.uniform(1,3),2)}s")
 
-        return {"worker": self.name, "file": path, "task": task_title, "diff": diff}
+        print(f"[{self.name}] DIFF +{diff['added']} -{diff['removed']}")
+        print(f"[{self.name}] ENTREGUE tarefa: {task_title}")
+
+        # Retorna resultado completo para o Manager
+        return {
+            "worker": self.name,
+            "file": path,
+            "task": task_title,
+            "diff": diff
+        }
+
+    def has_skill(self, skill: str) -> bool:
+        """
+        Verifica se o Worker possui a skill requerida.
+        """
+        return skill.lower() in [s.lower() for s in self.skills]

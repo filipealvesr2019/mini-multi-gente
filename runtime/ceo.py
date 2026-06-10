@@ -1,32 +1,65 @@
-from .manager import Manager
-import threading
+# runtime/ceo.py
+
+from runtime.manager import Manager
+
 
 class CEO:
-    def __init__(self):
+
+    def __init__(
+        self,
+        name,
+        persona,
+        skills,
+        llm=None
+    ):
+        self.name = name
+        self.persona = persona
+        self.skills = skills
+        self.llm = llm
+
         self.manager = Manager()
 
-    def run(self, tarefa):
-        print("Iniciando tarefa do CEO...")
+    def think(self, objective):
+        """
+        CEO analisa objetivo.
+        Não executa nada.
+        Apenas produz um plano.
+        """
 
-        subtasks = self.manager.divide_task(tarefa)
+        if not self.llm:
+            raise Exception("CEO sem LLM configurada")
 
-        # thread para ler comandos humanos
-        def input_loop():
-            while True:
-                cmd = input("CEO> ")
-                if cmd.lower() in ["exit", "sair", "fim"]:
-                    break
-                self.manager.command(cmd)
+        prompt = f"""
+Você é o CEO.
 
-        threading.Thread(target=input_loop, daemon=True).start()
+Nome: {self.name}
 
-        resultados = self.manager.execute_subtasks(subtasks)
+Persona:
+{self.persona}
 
-        print("\n=== Resultado final ===")
-        for r in resultados:
-            print(r)
+Skills:
+{", ".join(self.skills)}
 
+Objetivo:
+{objective}
 
-if __name__ == "__main__":
-    ceo = CEO()
-    ceo.run("Crie uma calculadora React")
+Crie um plano operacional para atingir esse objetivo.
+
+Retorne JSON.
+"""
+
+        return self.llm.generate(prompt)
+
+    def execute(self, objective):
+
+        print(f"\n[CEO {self.name}] analisando objetivo")
+
+        plan = self.think(objective)
+
+        print(f"\n[CEO {self.name}] plano criado")
+
+        return self.manager.execute_plan(plan)
+
+    def command(self, text):
+
+        return self.manager.command(text)
