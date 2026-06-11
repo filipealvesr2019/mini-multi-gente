@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligence | AIForge v2</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- TEMPORARIAMENTE DESABILITADO PARA TESTE -->
+    <!-- <link rel="stylesheet" href="../css/style.css?v=3"> -->
+    <!-- <link rel="stylesheet" href="../css/fix-gradient.css?v=3"> -->
+
+    <!-- INLINE FIX - Nuclear option to remove gradient artifacts -->
+    <style>
+        /* DESABILITAR COMPLETAMENTE todos os pseudo-elementos */
+        *::before,
+        *::after {
+            display: none !important;
+            content: "" !important;
+            background: none !important;
+            background-image: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            animation: none !important;
+            transform: none !important;
+            position: static !important;
+        }
+
+        /* FORÇAR remoção de background-clip em TODOS os spans */
+        span {
+            background: none !important;
+            background-image: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+        }
+
+        /* Remover efeito gradiente duplicado */
+        .text-gradient,
+        span.text-gradient,
+        [class*="gradient"] {
+            background: none !important;
+            background-image: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="af-navbar glass-nav">
+        <a href="../index.html" class="af-brand">
+            <i class="fa-solid fa-brain"></i>
+            AIFORGE
+        </a>
+
+        <button class="navbar-toggler d-lg-none" type="button"
+            style="background: none; border: none; font-size: 1.5rem; color: #333;">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="af-menu-wrapper" id="af-nav-menu">
+            <ul class="af-menu">
+                <li><a href="../index.html" class="af-link">Home</a></li>
+                <li><a href="about.html" class="af-link">Vision</a></li>
+
+                <!-- Services Dropdown -->
+                <li class="af-dropdown">
+                    <a href="services.html" class="af-link active">Intelligence <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="services.html">All Solutions</a></li>
+                        <li><a href="service-single.html">Generative AI</a></li>
+                        <li><a href="service-single.html">Computer Vision</a></li>
+                        <li><a href="service-single.html">Neural Ops</a></li>
+                        <li><a href="service-single.html">Predictive Analytics</a></li>
+                    </ul>
+                </li>
+
+                <!-- Pages Dropdown -->
+                <li class="af-dropdown">
+                    <a href="#" class="af-link">Pages <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="team.html">Our Architects</a></li>
+                        <li><a href="pricing.html">Access Tiers</a></li>
+                        <li><a href="faq.html">Knowledge Base</a></li>
+                        <li><a href="404.html">404 Error</a></li>
+                        <li><a href="projects.html">Case Studies</a></li>
+                        <li><a href="dashboard.html">Console</a></li>
+                        <li><a href="settings.html">Config</a></li>
+                        <li><a href="billing.html">Billing</a></li>
+                        <li><a href="thank-you.html">Success</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="portfolio.html" class="af-link">Portfolio</a></li>
+
+                <li class="af-dropdown">
+                    <a href="blog.html" class="af-link">Research <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="blog.html">Journal</a></li>
+                        <li><a href="blog-single.html">Article View</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="contact.html" class="af-link">Connect</a></li>
+            </ul>
+
+            <div class="af-nav-icons">
+                <a href="cart.html" class="af-icon-link" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.html" class="af-icon-link" aria-label="Login"><i class="fa-regular fa-user"></i></a>
+            </div>
+
+            <a href="contact.html" class="btn-af ms-4" style="padding: 10px 25px; font-size: 0.9rem;">
+                Launch Demo
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header style="padding: 220px 0 100px; text-align: center; position: relative; overflow: hidden;">
+        <div class="af-container" style="position: relative; z-index: 2;">
+            <span class="text-gradient"
+                style="font-weight: 700; letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; opacity: 0; animation: fadeInUp 0.6s var(--af-ease) 0.2s forwards;">
+                NEURAL ARCHITECTURE v9.0
+            </span>
+            <h1
+                style="margin: 25px 0; font-size: 4.5rem; font-weight: 800; opacity: 0; animation: fadeInUp 0.8s var(--af-ease) 0.4s forwards;">
+                COGNITIVE <span class="text-gradient">SUITE</span>
+            </h1>
+            <p
+                style="font-size: 1.25rem; max-width: 700px; margin: 0 auto 40px; color: #64748b; line-height: 1.8; opacity: 0; animation: fadeInUp 1s var(--af-ease) 0.6s forwards;">
+                Deploy enterprise-grade intelligence across every vertical of your organization.
+                Our AI infrastructure powers the future of autonomous systems.
+            </p>
+            <div
+                style="display: flex; gap: 15px; justify-content: center; opacity: 0; animation: fadeInUp 1s var(--af-ease) 0.8s forwards;">
+                <a href="contact.html" class="btn-af" style="padding: 15px 35px;">Request Demo</a>
+                <a href="#services" class="btn-af glass" style="padding: 15px 35px;">Explore Solutions</a>
+            </div>
+        </div>
+
+        <!-- Floating Stats -->
+        <div
+            style="position: absolute; top: 60%; right: 10%; opacity: 0; animation: fadeInUp 1s var(--af-ease) 1s forwards;">
+            <div class="glass-panel" style="padding: 20px 30px; text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 800; color: #8b5cf6;">99.9%</div>
+                <div style="font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px;">Uptime
+                </div>
+            </div>
+        </div>
+
+        <div
+            style="position: absolute; top: 60%; left: 10%; opacity: 0; animation: fadeInUp 1s var(--af-ease) 1.2s forwards;">
+            <div class="glass-panel" style="padding: 20px 30px; text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 800; color: #06b6d4;">50M+</div>
+                <div style="font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px;">
+                    Requests/Day</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3D Cards Grid -->
+    <section class="section-3d-cards" id="services" style="padding-top: 50px; padding-bottom: 120px;">
+        <div class="af-container">
+
+            <!-- Section Title -->
+            <div class="text-center mb-5" style="opacity: 0; animation: fadeInUp 0.8s var(--af-ease) 0.2s forwards;">
+                <span
+                    style="font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; color: #8b5cf6 !important; background: none !important;">
+                    INTELLIGENCE MODULES
+                </span>
+                <h2 style="font-size: 3.5rem; margin-top: 20px; font-weight: 800;">
+                    DEPLOY <span style="font-weight: 300; color: #64748b;">TOMORROW'S AI</span>
+                </h2>
+                <p style="font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 20px auto 0;">
+                    From language processing to computer vision, our AI suite transforms raw data into actionable
+                    intelligence.
+                </p>
+            </div>
+
+            <div class="cards-3d-grid">
+
+                <!-- Service 1 - Generative AI -->
+                <div class="card-3d card-genai">
+                    <div class="card-3d-bg"></div>
+                    <div class="card-3d-content">
+                        <i class="fa-solid fa-brain" style="font-size: 4.5rem; margin-bottom: 25px;"></i>
+                        <h3>Generative AI</h3>
+                        <p>
+                            Architect next-gen creativity. Deploy LLMs that reason, code, and synthesize content with
+                            human-level nuance.
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <span class="badge-custom">
+                                Neural Reasoning
+                            </span>
+                            <span class="badge-custom">
+                                Code Synthesis
+                            </span>
+                            <span class="badge-custom">
+                                Unimodal
+                            </span>
+                        </div>
+                        <a href="generative-ai.html" class="btn-af glass mt-4"
+                            style="color: #333; width: fit-content; padding: 12px 28px;">Deploy Model <i
+                                class="fa-solid fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Service 2 - Computer Vision -->
+                <div class="card-3d card-vision">
+                    <div class="card-3d-bg"></div>
+                    <div class="card-3d-content">
+                        <i class="fa-solid fa-eye" style="font-size: 4.5rem; margin-bottom: 25px;"></i>
+                        <h3>Computer Vision</h3>
+                        <p style="opacity: 0.9;">
+                            Give your systems sight. Real-time object tracking and biometric analysis with 99.9%
+                            precision.
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <span class="badge-custom">
+                                Object Tracking
+                            </span>
+                            <span class="badge-custom">
+                                Biometrics
+                            </span>
+                            <span class="badge-custom">
+                                Spatial AI
+                            </span>
+                        </div>
+                        <a href="computer-vision.html" class="btn-af mt-4"
+                            style="width: fit-content; padding: 12px 28px;">
+                            See Demo <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3 - Predictive Analytics -->
+                <div class="card-3d card-predict">
+                    <div class="card-3d-bg"></div>
+                    <div class="card-3d-content">
+                        <i class="fa-solid fa-chart-network" style="font-size: 4.5rem; margin-bottom: 25px;"></i>
+                        <h3>Predictive Analytics</h3>
+                        <p>
+                            Turn uncertainty into strategy. Forecast market shifts and user behavior before they happen.
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <span class="badge-custom">
+                                Forecasting
+                            </span>
+                            <span class="badge-custom">
+                                Risk Modeling
+                            </span>
+                            <span class="badge-custom">
+                                Market Intel
+                            </span>
+                        </div>
+                        <a href="predictive-analytics.html" class="btn-af glass mt-4"
+                            style="color: #333; width: fit-content; padding: 12px 28px;">Analyze Data <i
+                                class="fa-solid fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Service 4 - Neural Ops -->
+                <div class="card-3d card-neural">
+                    <div class="card-3d-bg"></div>
+                    <div class="card-3d-content">
+                        <i class="fa-solid fa-server" style="font-size: 4.5rem; margin-bottom: 25px;"></i>
+                        <h3>Neural Ops</h3>
+                        <p style="opacity: 0.95;">
+                            Maximum velocity MLOps. Deploy, monitor, and scale AI infrastructure with zero friction.
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <span class="badge-custom">
+                                Auto-Scaling
+                            </span>
+                            <span class="badge-custom">
+                                Model Registry
+                            </span>
+                            <span class="badge-custom">
+                                CI/CD
+                            </span>
+                        </div>
+                        <a href="neural-ops.html" class="btn-af mt-4"
+                            style="width: fit-content; background: white; color: #0891b2; padding: 12px 28px;">
+                            Launch Platform <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 5 - Speech AI -->
+                <div class="card-3d card-speech">
+                    <div class="card-3d-bg"></div>
+                    <div class="card-3d-content">
+                        <i class="fa-solid fa-wave-square" style="font-size: 4.5rem; margin-bottom: 25px;"></i>
+                        <h3>Speech AI</h3>
+                        <p>
+                            Break language barriers. Ultra-realistic voice synthesis and translation for global reach.
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <span class="badge-custom">
+                                Voice Synthesis
+                            </span>
+                            <span class="badge-custom">
+                                Real-time Translation
+                            </span>
+                            <span class="badge-custom">
+                                Audio Analysis
+                            </span>
+                        </div>
+                        <a href="speech-ai.html" class="btn-af glass mt-4"
+                            style="color: #333; width: fit-content; padding: 12px 28px;">Listen Now <i
+                                class="fa-solid fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Service 6 - Recommendation Engine -->
+                <div class="card-3d card-rec">
+                    <div class="card-3d-bg"></div>
+                    <div class="card-3d-content">
+                        <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 4.5rem; margin-bottom: 25px;"></i>
+                        <h3>Recommendation Engine</h3>
+                        <p style="opacity: 0.9;">
+                            Curate desire. Deep learning algorithms that understand usage patterns to serve the perfect
+                            content.
+                        </p>
+                        <div style="margin-top: 20px;">
+                            <span class="badge-custom">
+                                Deep Filtering
+                            </span>
+                            <span class="badge-custom">
+                                Hyper-Personalization
+                            </span>
+                        </div>
+                        <a href="recommendation-engine.html" class="btn-af mt-4"
+                            style="width: fit-content; padding: 12px 28px;">
+                            Start Personalizing <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="af-footer">
+        <div class="af-container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <a href="../index.html" class="af-brand mb-4">
+                        <i class="fa-solid fa-brain"></i> AIFORGE
+                    </a>
+                    <p class="text-muted mt-3">
+                        Pioneering the next generation of artificial intelligence.
+                    </p>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <h5 class="mb-4">Platform</h5>
+                    <ul style="line-height: 2;">
+                        <li><a href="services.html" class="af-link">Solutions</a></li>
+                        <li><a href="pricing.html" class="af-link">Pricing</a></li>
+                        <li><a href="faq.html" class="af-link">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="mb-4">Company</h5>
+                    <ul style="line-height: 2;">
+                        <li><a href="about.html" class="af-link">About</a></li>
+                        <li><a href="team.html" class="af-link">Careers</a></li>
+                        <li><a href="contact.html" class="af-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Stay Connected</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn-af glass rounded-circle d-flex align-items-center justify-content-center"
+                            style="width: 45px; height: 45px;"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn-af glass rounded-circle d-flex align-items-center justify-content-center"
+                            style="width: 45px; height: 45px;"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="#" class="btn-af glass rounded-circle d-flex align-items-center justify-content-center"
+                            style="width: 45px; height: 45px;"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-4" style="border-top: 1px solid rgba(0,0,0,0.05); color: #94a3b8;">
+                &copy; 2024 AIForge Intelligence. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/enhancements.js"></script>
+</body>
+
+</html>

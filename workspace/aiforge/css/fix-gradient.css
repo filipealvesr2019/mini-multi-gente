@@ -1,0 +1,149 @@
+/**
+ * CRITICAL FIX FOR GRADIENT GLITCH
+ * This file removes all unwanted pseudo-elements that create visual artifacts
+ * Load this file AFTER style.css
+ *
+ * IMPORTANT: This file uses !important on EVERYTHING to override any other CSS
+ */
+
+/* =====================================================
+   NUCLEAR OPTION - REMOVE ALL PSEUDO ELEMENTS
+   ===================================================== */
+
+/* REMOVE ALL ::before and ::after from ANY element with text-gradient class */
+.text-gradient::before,
+.text-gradient::after,
+span.text-gradient::before,
+span.text-gradient::after,
+div.text-gradient::before,
+div.text-gradient::after,
+h1.text-gradient::before,
+h1.text-gradient::after,
+h2.text-gradient::before,
+h2.text-gradient::after,
+h3.text-gradient::before,
+h3.text-gradient::after,
+*[class*="text-gradient"]::before,
+*[class*="text-gradient"]::after {
+    display: none !important;
+    content: "" !important;
+    background: none !important;
+    background-image: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    overflow: hidden !important;
+}
+
+/* FORCE REMOVE from sections - EVERY POSSIBLE SELECTOR */
+.section-3d-cards .text-gradient::before,
+.section-3d-cards .text-gradient::after,
+.section-3d-cards .text-center .text-gradient::before,
+.section-3d-cards .text-center .text-gradient::after,
+.section-3d-cards span.text-gradient::before,
+.section-3d-cards span.text-gradient::after,
+.section-3d-cards div.text-gradient::before,
+.section-3d-cards div.text-gradient::after,
+section .text-gradient::before,
+section .text-gradient::after,
+section span::before,
+section span::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* FORCE REMOVE from headers - EVERY POSSIBLE SELECTOR */
+header .text-gradient::before,
+header .text-gradient::after,
+header span.text-gradient::before,
+header span.text-gradient::after,
+header div.text-gradient::before,
+header div.text-gradient::after,
+header h1 .text-gradient::before,
+header h1 .text-gradient::after,
+header h2 .text-gradient::before,
+header h2 .text-gradient::after,
+header span::before,
+header span::after,
+header div::before,
+header div::after,
+header h1::before,
+header h1::after,
+header h2::before,
+header h2::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    background-image: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+}
+
+/* SPECIFICALLY target the problematic rule by class combination */
+.section-3d-cards .text-center .text-gradient::after,
+.text-center .text-gradient::after,
+.af-container .text-gradient::after {
+    display: none !important;
+    content: "" !important;
+    background: none !important;
+    background-image: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Clean ALL spans everywhere that might have pseudo-elements */
+.section-3d-cards span::before,
+.section-3d-cards span::after,
+header span::before,
+header span::after,
+.af-container span::before,
+.af-container span::after,
+.text-center span::before,
+.text-center span::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    background-image: none !important;
+}
+
+/* Remove from h1, h2 inside text-gradient contexts */
+h1 span.text-gradient::before,
+h1 span.text-gradient::after,
+h2 span.text-gradient::before,
+h2 span.text-gradient::after {
+    display: none !important;
+    content: "" !important;
+}
+
+/* Disable ALL animations on pseudo-elements in these areas */
+header *::before,
+header *::after,
+.section-3d-cards *::before,
+.section-3d-cards *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Final catch-all for any remaining gradient pseudo-elements */
+*[class*="gradient"]::before,
+*[class*="gradient"]::after {
+    background: none !important;
+    background-image: none !important;
+    content: "" !important;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INITIALIZE PROTOCOL | AIForge v2</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/enhancements.css">
+    <link rel="stylesheet" href="../css/gradient-fix-final.css">
+</head>
+
+<body class="auth-body">
+
+    <!-- Background (Handled by CSS) -->
+
+    <!-- Navigation (Minimal) -->
+    <nav class="af-navbar glass-nav" style="background: transparent; border: none; box-shadow: none; top: 30px;">
+        <a href="../index.html" class="af-brand">
+            <i class="fa-solid fa-brain"></i>
+            AIFORGE
+        </a>
+        <a href="../index.html" class="btn-af glass" style="padding: 10px 20px; font-size: 0.8rem;">
+            Back to Hub
+        </a>
+    </nav>
+
+    <!-- Content -->
+    <section class="auth-container">
+        <div class="auth-card" style="max-width: 520px;">
+
+            <div class="text-center mb-4">
+                <h2 style="font-size: 2rem; margin-bottom: 10px;">INITIALIZE <span class="text-gradient">PROTOCOL</span>
+                </h2>
+                <p style="color: #64748b; font-size: 0.95rem;">Join the neural network.</p>
+            </div>
+
+            <form>
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        <label class="form-label text-muted fw-bold small">First Name</label>
+                        <input type="text" class="form-control" placeholder="Jane">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label text-muted fw-bold small">Last Name</label>
+                        <input type="text" class="form-control" placeholder="Doe">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted fw-bold small">Comms Vector (Email)</label>
+                    <input type="email" class="form-control" placeholder="jane@aiforge.io">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted fw-bold small">Secure Passcode</label>
+                    <input type="password" class="form-control" placeholder="••••••••">
+                    <small class="text-muted mt-1 d-block" style="font-size: 0.75rem;">Min 8 chars, 1 symbol, 1
+                        uppercase.</small>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input type="checkbox" id="terms" style="accent-color: var(--af-primary);">
+                    <label for="terms" class="small text-muted ms-1">I accept the <a href="#"
+                            class="text-dark text-decoration-underline">Neural Link Terms</a>.</label>
+                </div>
+
+                <a href="dashboard.html" class="btn-af w-100 mt-2">
+                    Begin Simulation <i class="fa-solid fa-bolt ms-2"></i>
+                </a>
+            </form>
+
+            <div class="mt-4 text-center small text-muted">
+                Already Linked? <a href="login.html" class="text-pink fw-bold text-decoration-none">Access Console</a>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEAM | AIForge v2</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/enhancements.css">
+    <link rel="stylesheet" href="../css/gradient-fix-final.css">
+    <style>
+        /* CRITICAL HOTFIXES FOR TEAM PAGE */
+        /* Garante espaçamento e centralização na foto - Seletor Ultra Específico */
+        .section-3d-cards .glass-panel .rounded-circle {
+            margin-bottom: 1.5rem !important;
+            /* Reduzido para aproximar do título */
+            margin-left: auto !important;
+            margin-right: auto !important;
+            display: block !important;
+            transform-origin: center bottom;
+        }
+
+        /* Ajuste de animação */
+        .section-3d-cards .glass-panel:hover .rounded-circle.shadow-lg {
+            transform: scale(1.05) translateY(-10px) !important;
+        }
+
+        /* Fix Icons Spacing (Desgrudar ícones) */
+        .section-3d-cards .glass-panel .d-flex.justify-content-center {
+            gap: 1.5rem !important;
+            margin-top: 1.5rem !important;
+        }
+
+        .section-3d-cards .glass-panel .fa-brands {
+            font-size: 1.4rem !important;
+            /* Ícones um pouco maiores */
+            transition: all 0.3s ease;
+        }
+
+        .section-3d-cards .glass-panel .fa-brands:hover {
+            color: var(--af-primary) !important;
+            transform: scale(1.2);
+        }
+
+        /* Correção de Grid (caso o CSS externo falhe) */
+        @media (min-width: 768px) {
+            .col-md-3 {
+                flex: 0 0 25% !important;
+                max-width: 25% !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="af-navbar glass-nav">
+        <a href="../index.html" class="af-brand">
+            <i class="fa-solid fa-brain"></i>
+            AIFORGE
+        </a>
+
+        <!-- Mobile Handlers -->
+        <button class="navbar-toggler d-lg-none" type="button"
+            style="background: none; border: none; font-size: 1.5rem; color: #333;"
+            onclick="document.getElementById('af-nav-menu').classList.toggle('active')">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="af-menu-wrapper" id="af-nav-menu">
+            <ul class="af-menu">
+                <li><a href="../index.html" class="af-link">Home</a></li>
+                <li><a href="about.html" class="af-link">Vision</a></li>
+
+                <li class="af-dropdown">
+                    <a href="services.html" class="af-link">Intelligence <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="services.html">All Solutions</a></li>
+                        <li><a href="service-single.html">Generative AI</a></li>
+                        <li><a href="service-single.html">Computer Vision</a></li>
+                        <li><a href="service-single.html">Neural Ops</a></li>
+                        <li><a href="service-single.html">Predictive Analytics</a></li>
+                    </ul>
+                </li>
+
+                <li class="af-dropdown">
+                    <a href="#" class="af-link">Pages <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="team.html">Our Architects</a></li>
+                        <li><a href="pricing.html">Access Tiers</a></li>
+                        <li><a href="faq.html">Knowledge Base</a></li>
+                        <li><a href="404.html">404 Error</a></li>
+                        <li><a href="projects.html">Case Studies</a></li>
+                        <li><a href="dashboard.html">Console</a></li>
+                        <li><a href="settings.html">Config</a></li>
+                        <li><a href="billing.html">Billing</a></li>
+                        <li><a href="thank-you.html">Success</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="portfolio.html" class="af-link">Portfolio</a></li>
+
+                <li class="af-dropdown">
+                    <a href="blog.html" class="af-link">Research <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="blog.html">Journal</a></li>
+                        <li><a href="blog-single.html">Article View</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="contact.html" class="af-link">Connect</a></li>
+            </ul>
+
+            <div class="af-nav-icons d-flex align-items-center gap-3 ms-4">
+                <a href="cart.html" class="af-icon-link" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.html" class="af-icon-link" aria-label="Login"><i class="fa-regular fa-user"></i></a>
+            </div>
+
+            <a href="contact.html" class="btn-af ms-4" style="padding: 10px 25px; font-size: 0.9rem;">
+                Launch Demo
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header style="padding: 200px 0 80px; text-align: center;">
+        <div class="af-container">
+            <h1 style="margin: 20px 0; font-size: 4rem;">ARCHITECTS</h1>
+            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #64748b;">
+                The minds building the bridge between humanity and artificial superintelligence.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content: Team Grid -->
+    <section class="section-3d-cards" style="padding-top: 0; padding-bottom: 100px;">
+        <div class="af-container">
+            <div class="row g-4">
+
+                <!-- Member 1 -->
+                <div class="col-md-3 text-center">
+                    <div class="glass-panel p-4 h-100">
+                        <div class="mb-3 d-inline-block rounded-circle overflow-hidden shadow-lg"
+                            style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80"
+                                alt="CEO" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h3 class="h5 mb-1">Dr. Sarah Jenning</h3>
+                        <p class="text-primary small fw-bold mb-3">CEO & Founder</p>
+                        <p class="small text-muted mb-3">Ex-Google Brain researcher pioneering neuro-symbolic AI.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="text-secondary"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#" class="text-secondary"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="col-md-3 text-center">
+                    <div class="glass-panel p-4 h-100">
+                        <div class="mb-3 d-inline-block rounded-circle overflow-hidden shadow-lg"
+                            style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80"
+                                alt="CTO" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h3 class="h5 mb-1">Mark Chen</h3>
+                        <p class="text-primary small fw-bold mb-3">CTO</p>
+                        <p class="small text-muted mb-3">Architect of the 'Nebula' transformer model.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="text-secondary"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#" class="text-secondary"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="col-md-3 text-center">
+                    <div class="glass-panel p-4 h-100">
+                        <div class="mb-3 d-inline-block rounded-circle overflow-hidden shadow-lg"
+                            style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80"
+                                alt="Head of Product" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h3 class="h5 mb-1">Elena Rodriguez</h3>
+                        <p class="text-primary small fw-bold mb-3">Head of Product</p>
+                        <p class="small text-muted mb-3">Bridging the gap between algorithms and UI/UX.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="text-secondary"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="col-md-3 text-center">
+                    <div class="glass-panel p-4 h-100">
+                        <div class="mb-3 d-inline-block rounded-circle overflow-hidden shadow-lg"
+                            style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80"
+                                alt="Lead Data Scientist" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <h3 class="h5 mb-1">David Kim</h3>
+                        <p class="text-primary small fw-bold mb-3">Lead Scientist</p>
+                        <p class="small text-muted mb-3">Specialist in reinforcement learning and computer vision.</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="text-secondary"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#" class="text-secondary"><i class="fa-solid fa-flask"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Glass Footer -->
+    <footer class="af-footer">
+        <div class="af-container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <a href="#" class="af-brand mb-4">
+                        <i class="fa-solid fa-brain"></i> AIFORGE
+                    </a>
+                    <p style="color: #64748b; margin-top: 20px;">
+                        Pioneering the next generation of artificial intelligence.
+                    </p>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <h5 class="mb-4">Platform</h5>
+                    <ul style="line-height: 2;">
+                        <li><a href="#" class="af-link">Solutions</a></li>
+                        <li><a href="#" class="af-link">Pricing</a></li>
+                        <li><a href="#" class="af-link">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="mb-4">Company</h5>
+                    <ul style="line-height: 2;">
+                        <li><a href="#" class="af-link">About</a></li>
+                        <li><a href="#" class="af-link">Careers</a></li>
+                        <li><a href="#" class="af-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Stay Connected</h5>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" class="btn-af glass"
+                            style="padding: 10px; border-radius: 50%; width: 45px; height: 45px; justify-content: center;"><i
+                                class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn-af glass"
+                            style="padding: 10px; border-radius: 50%; width: 45px; height: 45px; justify-content: center;"><i
+                                class="fa-brands fa-linkedin"></i></a>
+                        <a href="#" class="btn-af glass"
+                            style="padding: 10px; border-radius: 50%; width: 45px; height: 45px; justify-content: center;"><i
+                                class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-4" style="border-top: 1px solid rgba(0,0,0,0.05); color: #94a3b8;">
+                &copy; 2024 AIForge Intelligence. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/enhancements.js"></script>
+</body>
+
+</html>

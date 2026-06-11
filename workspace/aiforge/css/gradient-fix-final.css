@@ -1,0 +1,74 @@
+/* =====================================================
+   AIFORGE - FINAL GRADIENT FIX
+   Remove the purple/pink bar above gradient text
+   ===================================================== */
+
+/* NUCLEAR OPTION: Remove ALL pseudo-elements from ANY element containing gradient text */
+.text-gradient::before,
+.text-gradient::after,
+[class*="text-gradient"]::before,
+[class*="text-gradient"]::after,
+span.text-gradient::before,
+span.text-gradient::after,
+h1 .text-gradient::before,
+h1 .text-gradient::after,
+h2 .text-gradient::before,
+h2 .text-gradient::after,
+h3 .text-gradient::before,
+h3 .text-gradient::after,
+h4 .text-gradient::before,
+h4 .text-gradient::after,
+.section-header .text-gradient::before,
+.section-header .text-gradient::after,
+.section-3d-cards .text-gradient::before,
+.section-3d-cards .text-gradient::after,
+.text-center .text-gradient::before,
+.text-center .text-gradient::after,
+header .text-gradient::before,
+header .text-gradient::after,
+.af-container .text-gradient::before,
+.af-container .text-gradient::after,
+section .text-gradient::before,
+section .text-gradient::after {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: none !important;
+    background-image: none !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+/* Clean text-gradient styling without decorations */
+.text-gradient {
+    background: linear-gradient(to right, #7c3aed, #db2777) !important;
+    -webkit-background-clip: text !important;
+    -moz-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    -moz-text-fill-color: transparent !important;
+    color: transparent !important;
+    display: inline !important;
+    position: relative !important;
+}
+
+/* Ensure no decorative bars appear */
+.section-header h2 .text-gradient,
+.section-3d-cards h2 .text-gradient,
+h1 .text-gradient,
+h2 .text-gradient,
+h3 .text-gradient {
+    position: relative !important;
+}
+
+.section-header h2 .text-gradient::before,
+.section-header h2 .text-gradient::after,
+.section-3d-cards h2 .text-gradient::before,
+.section-3d-cards h2 .text-gradient::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSOLE | AIForge v2</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/enhancements.css">
+    <link rel="stylesheet" href="../css/gradient-fix-final.css">
+</head>
+
+<body>
+
+    <!-- Navigation (App Mode) -->
+    <nav class="af-navbar glass-nav">
+        <a href="../index.html" class="af-brand">
+            <i class="fa-solid fa-brain"></i>
+            AIFORGE
+        </a>
+
+        <!-- Mobile Handlers -->
+        <button class="navbar-toggler d-lg-none" type="button"
+            style="background: none; border: none; font-size: 1.5rem; color: #333;">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="af-menu-wrapper" id="af-nav-menu">
+            <ul class="af-menu">
+                <li><a href="dashboard.html" class="af-link active">Console</a></li>
+                <li><a href="projects.html" class="af-link">Deployments</a></li>
+                <li><a href="settings.html" class="af-link">Config</a></li>
+                <li><a href="billing.html" class="af-link">Resources</a></li>
+            </ul>
+
+            <div class="af-nav-icons d-flex align-items-center gap-3 ms-4">
+                <div class="rounded-circle overflow-hidden border border-2 border-white"
+                    style="width: 40px; height: 40px;">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=8b5cf6&color=fff" alt="User"
+                        class="w-100 h-100 object-fit-cover">
+                </div>
+                <span class="small fw-bold text-muted">Admin Node</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <section style="padding: 120px 0 80px;">
+        <div class="af-container">
+
+            <!-- Welcome Bar -->
+            <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
+                <div>
+                    <h1 class="mb-0 fs-2 fw-bold">SYSTEM <span class="text-gradient">CONSOLE</span></h1>
+                    <p class="text-muted mb-0">Status: Online | Latency: 12ms</p>
+                </div>
+                <div class="d-flex gap-3">
+                    <button class="btn-af glass py-2 px-4 text-dark">
+                        <i class="fa-solid fa-rotate-right me-2"></i> Refresh
+                    </button>
+                    <a href="services.html" class="btn-af py-2 px-4">
+                        <i class="fa-solid fa-plus me-2"></i> New Instance
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="row g-4 mb-5">
+                <!-- Stat 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="glass-panel p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="small fw-bold text-muted">ACTIVE NODES</span>
+                            <i class="fa-solid fa-network-wired text-gradient"></i>
+                        </div>
+                        <h2 class="display-5 fw-bold mb-0">12</h2>
+                        <span class="text-success small"><i class="fa-solid fa-arrow-up"></i> +2 this cycle</span>
+                    </div>
+                </div>
+                <!-- Stat 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="glass-panel p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="small fw-bold text-muted">API CALLS</span>
+                            <i class="fa-solid fa-code-branch text-gradient"></i>
+                        </div>
+                        <h2 class="display-5 fw-bold mb-0">8.4k</h2>
+                        <span class="text-success small"><i class="fa-solid fa-arrow-up"></i> +15% usage</span>
+                    </div>
+                </div>
+                <!-- Stat 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="glass-panel p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="small fw-bold text-muted">COMPUTE LOAD</span>
+                            <i class="fa-solid fa-microchip text-gradient"></i>
+                        </div>
+                        <h2 class="display-5 fw-bold mb-0">42%</h2>
+                        <span class="text-warning small">Stable</span>
+                    </div>
+                </div>
+                <!-- Stat 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="glass-panel p-4">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="small fw-bold text-muted">CREDITS</span>
+                            <i class="fa-solid fa-coins text-gradient"></i>
+                        </div>
+                        <h2 class="display-5 fw-bold mb-0">$450</h2>
+                        <span class="text-muted small">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="row g-4">
+                <!-- Recent Activity -->
+                <div class="col-lg-8">
+                    <div class="glass-panel p-4">
+                        <h4 class="mb-4">System Logistics</h4>
+
+                        <div class="d-flex flex-column gap-3">
+                            <!-- Activity Item 1 -->
+                            <div
+                                class="d-flex align-items-center justify-content-between pb-3 border-bottom border-light-subtle">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 40px; background: rgba(139,92,246,0.1); color: #8b5cf6;">
+                                        <i class="fa-solid fa-cube"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Deployment Initialized</h6>
+                                        <small class="text-muted">Project: Alpha-Centauri-7</small>
+                                    </div>
+                                </div>
+                                <span class="small text-muted">2 mins ago</span>
+                            </div>
+
+                            <!-- Activity Item 2 -->
+                            <div
+                                class="d-flex align-items-center justify-content-between pb-3 border-bottom border-light-subtle">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 40px; background: rgba(6,182,212,0.1); color: #06b6d4;">
+                                        <i class="fa-solid fa-credit-card"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Resource Top-up</h6>
+                                        <small class="text-muted">Invoice #9923</small>
+                                    </div>
+                                </div>
+                                <span class="small text-muted">4 hours ago</span>
+                            </div>
+
+                            <!-- Activity Item 3 -->
+                            <div
+                                class="d-flex align-items-center justify-content-between pb-3 border-bottom border-light-subtle">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 40px; background: rgba(236,72,153,0.1); color: #ec4899;">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">Latency Spike</h6>
+                                        <small class="text-muted">Region: US-East-1</small>
+                                    </div>
+                                </div>
+                                <span class="small text-muted">Yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="col-lg-4">
+                    <div class="glass-panel p-4">
+                        <h4 class="mb-4">Quick Command</h4>
+
+                        <div class="mb-3">
+                            <label class="form-label text-muted small">Select Environment</label>
+                            <select class="form-control">
+                                <option>Production (v2.1)</option>
+                                <option>Staging</option>
+                                <option>Dev Sandox</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-muted small">Action</label>
+                            <select class="form-control">
+                                <option>Run Diagnostics</option>
+                                <option>Clear Cache</option>
+                                <option>Reboot Node</option>
+                            </select>
+                        </div>
+
+                        <button class="btn-af w-100 justify-content-center">Execute</button>
+
+                        <div
+                            class="mt-4 p-3 rounded-3 border border-dashed border-primary border-opacity-25 bg-primary bg-opacity-10">
+                            <small class="text-muted d-block mb-1">TIP OF THE CYCLE</small>
+                            <p class="mb-0 small text-secondary">Upgrade your neural core to reduce latency by 40%.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Glass Footer -->
+    <footer class="af-footer">
+        <div class="af-container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <a href="../index.html" class="af-brand">
+                        <i class="fa-solid fa-brain"></i> AIFORGE
+                    </a>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <p class="mb-0 text-muted small">
+                        <i class="fa-solid fa-lock me-1"></i> All transmissions are encrypted.
+                    </p>
+                </div>
+            </div>
+            <div class="text-center mt-4 pt-4" style="border-top: 1px solid rgba(0,0,0,0.05); color: #94a3b8;">
+                &copy; 2024 AIForge Intelligence. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/enhancements.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESOURCE ALLOCATION | AIForge v2</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/enhancements.css">
+    <link rel="stylesheet" href="../css/gradient-fix-final.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="af-navbar glass-nav">
+        <a href="../index.html" class="af-brand">
+            <i class="fa-solid fa-brain"></i>
+            AIFORGE
+        </a>
+
+        <!-- Mobile Handlers -->
+        <button class="navbar-toggler d-lg-none" type="button"
+            style="background: none; border: none; font-size: 1.5rem; color: #333;">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="af-menu-wrapper" id="af-nav-menu">
+            <ul class="af-menu">
+                <li><a href="../index.html" class="af-link">Home</a></li>
+                <li><a href="about.html" class="af-link">Vision</a></li>
+
+                <!-- Services Dropdown -->
+                <li class="af-dropdown">
+                    <a href="services.html" class="af-link">Intelligence <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="services.html">All Solutions</a></li>
+                        <li><a href="service-single.html">Generative AI</a></li>
+                        <li><a href="service-single.html">Computer Vision</a></li>
+                        <li><a href="service-single.html">Neural Ops</a></li>
+                        <li><a href="service-single.html">Predictive Analytics</a></li>
+                    </ul>
+                </li>
+
+                <!-- Pages Dropdown -->
+                <li class="af-dropdown">
+                    <a href="#" class="af-link">Pages <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="team.html">Our Architects</a></li>
+                        <li><a href="pricing.html">Access Tiers</a></li>
+                        <li><a href="faq.html">Knowledge Base</a></li>
+                        <li><a href="404.html">404 Error</a></li>
+                        <li><a href="projects.html">Case Studies</a></li>
+                        <li><a href="dashboard.html">Console</a></li>
+                        <li><a href="settings.html">Config</a></li>
+                        <li><a href="billing.html">Billing</a></li>
+                        <li><a href="thank-you.html">Success</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="portfolio.html" class="af-link">Portfolio</a></li>
+
+                <li class="af-dropdown">
+                    <a href="blog.html" class="af-link">Research <i class="fa-solid fa-chevron-down"
+                            style="font-size: 0.7em;"></i></a>
+                    <ul class="af-dropdown-menu glass-panel">
+                        <li><a href="blog.html">Journal</a></li>
+                        <li><a href="blog-single.html">Article View</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="contact.html" class="af-link">Connect</a></li>
+            </ul>
+
+            <div class="af-nav-icons d-flex align-items-center gap-3 ms-4">
+                <a href="cart.html" class="af-icon-link active" aria-label="Cart"><i
+                        class="fa-solid fa-cart-shopping"></i></a>
+                <a href="login.html" class="af-icon-link" aria-label="Login"><i class="fa-regular fa-user"></i></a>
+            </div>
+
+            <a href="contact.html" class="btn-af ms-4" style="padding: 10px 25px; font-size: 0.9rem;">
+                Launch Demo
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header style="padding: 180px 0 60px; text-align: center;">
+        <div class="af-container">
+            <h1 style="margin: 20px 0; font-size: 3.5rem;">RESOURCE <span class="text-gradient">ALLOCATION</span></h1>
+            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; color: #64748b;">
+                Review your selected computational modules before initialization.
+            </p>
+        </div>
+    </header>
+
+    <!-- Cart Content -->
+    <section class="section-3d-cards" style="padding-top: 0; padding-bottom: 100px;">
+        <div class="af-container">
+            <div class="row">
+                <!-- Cart Items -->
+                <div class="col-lg-8">
+                    <div class="glass-panel p-4">
+                        <div class="af-table-wrapper border-0 shadow-none bg-transparent p-0">
+                            <table class="af-table">
+                                <thead>
+                                    <tr>
+                                        <th>Module</th>
+                                        <th class="text-center">Units</th>
+                                        <th class="text-end">Cost</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Item 1 -->
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div
+                                                    style="width: 60px; height: 60px; background: #e2e8f0; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-solid fa-microchip text-gradient fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <h5 class="mb-0 font-display">Neuromorphic Core v4</h5>
+                                                    <span class="small text-muted">Processing Unit</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="number" value="2" class="form-control text-center mx-auto"
+                                                style="width: 70px;">
+                                        </td>
+                                        <td class="text-end fw-bold">
+                                            $4,500.00
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="#" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Item 2 -->
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div
+                                                    style="width: 60px; height: 60px; background: #e2e8f0; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-solid fa-database text-gradient fs-4"></i>
+                                                </div>
+                                                <div>
+                                                    <h5 class="mb-0 font-display">Quantum Data Dataset</h5>
+                                                    <span class="small text-muted">Data Pack</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="number" value="1" class="form-control text-center mx-auto"
+                                                style="width: 70px;">
+                                        </td>
+                                        <td class="text-end fw-bold">
+                                            $1,200.00
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="#" class="text-danger"><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-4 text-start">
+                            <a href="services.html" class="af-link small"><i class="fa-solid fa-arrow-left me-2"></i>
+                                Acquire More Resources</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="col-lg-4">
+                    <div class="glass-panel p-4">
+                        <h4 class="mb-4">System Summary</h4>
+                        <div class="d-flex justify-content-between mb-3 text-muted">
+                            <span>Subtotal</span>
+                            <span>$10,200.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 text-muted">
+                            <span>Neural Tax (5%)</span>
+                            <span>$510.00</span>
+                        </div>
+                        <div class="my-4 border-top opacity-25"></div>
+                        <div class="d-flex justify-content-between mb-4 fw-bold fs-5 text-dark">
+                            <span>Total Output</span>
+                            <span class="text-gradient">$10,710.00</span>
+                        </div>
+
+                        <a href="checkout.html" class="btn-af w-100 text-center justify-content-center">Initiate
+                            Transfer</a>
+                    </div>
+
+                    <div class="glass-panel mt-4 p-4 text-center">
+                        <i class="fa-solid fa-shield-halved text-gradient fs-2 mb-2"></i>
+                        <p class="small text-muted m-0">256-bit Quantum Encryption Secured</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Glass Footer -->
+    <footer class="af-footer">
+        <div class="af-container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <a href="#" class="af-brand mb-4">
+                        <i class="fa-solid fa-brain"></i> AIFORGE
+                    </a>
+                    <p style="color: #64748b; margin-top: 20px;">
+                        Pioneering the next generation of artificial intelligence.
+                    </p>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <h5 class="mb-4">Platform</h5>
+                    <ul style="line-height: 2;">
+                        <li><a href="#" class="af-link">Solutions</a></li>
+                        <li><a href="#" class="af-link">Pricing</a></li>
+                        <li><a href="#" class="af-link">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="mb-4">Company</h5>
+                    <ul style="line-height: 2;">
+                        <li><a href="#" class="af-link">About</a></li>
+                        <li><a href="#" class="af-link">Careers</a></li>
+                        <li><a href="#" class="af-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="mb-4">Stay Connected</h5>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" class="btn-af glass"
+                            style="padding: 10px; border-radius: 50%; width: 45px; height: 45px; justify-content: center;"><i
+                                class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn-af glass"
+                            style="padding: 10px; border-radius: 50%; width: 45px; height: 45px; justify-content: center;"><i
+                                class="fa-brands fa-linkedin"></i></a>
+                        <a href="#" class="btn-af glass"
+                            style="padding: 10px; border-radius: 50%; width: 45px; height: 45px; justify-content: center;"><i
+                                class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-4" style="border-top: 1px solid rgba(0,0,0,0.05); color: #94a3b8;">
+                &copy; 2024 AIForge Intelligence. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/enhancements.js"></script>
+</body>
+
+</html>

@@ -1,10 +1,22 @@
-class Agent:
-    def __init__(self, name, role, persona, skills=None, authority=0):
-        self.name = name
-        self.role = role
-        self.persona = persona
-        self.skills = skills or []
-        self.authority = authority
+# runtime/agent.py
+import os
 
-    def __str__(self):
-        return f"{self.role}: {self.name} ({self.persona}) skills={self.skills}"
+class Agent:
+    def __init__(self, name, skills=None):
+        self.name = name
+        self.skills = skills or []
+
+    def execute(self, project_path):
+        """
+        Lógica do agente. 
+        Aqui ele lista os arquivos com caminho relativo,
+        mantendo a hierarquia.
+        """
+        print(f"[{self.name}] analisando projeto: {project_path}")
+
+        for root, dirs, files in os.walk(project_path):
+            for f in files:
+                filepath = os.path.join(root, f)
+                # caminho relativo em relação à raiz do projeto
+                relative_path = os.path.relpath(filepath, project_path)
+                print(f"[{self.name}] arquivo encontrado: {relative_path}")
