@@ -1,0 +1,26 @@
+[
+  {
+    "agent": "CEO",
+    "decision": "compiled_task_graph",
+    "context": {
+      "num_nodes": 0,
+      "action_type": "UNKNOWN"
+    }
+  },
+  {
+    "agent": "CEO",
+    "decision": "compiled_task_graph",
+    "context": {
+      "num_nodes": 1,
+      "action_type": "RUN"
+    }
+  },
+  {
+    "agent": "CEO",
+    "decision": "compiled_task_graph",
+    "context": {
+      "num_nodes": 1,
+      "action_type": "RUN"
+    }
+  }
+]
